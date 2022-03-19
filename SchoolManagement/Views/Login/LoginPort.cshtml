@@ -1,0 +1,19 @@
+﻿@{
+    ViewBag.Title = "LoginPort";
+    Layout = null;
+}
+@Styles.Render("~/Content/css")
+<div class="signin-wrapper">
+
+    <div class="signin-box">
+        <h2 class="slim-logo"><a href="index.html">Welcome<span>.</span></a></h2>
+        <h2 class="signin-title-primary">Login Port</h2>
+        <h3 class="signin-title-secondary">FPT ACADEMY PORTAL.</h3>
+
+        <img src="https://ap.fptacademy.vn/logo.png" class="mb-3 img-fluid" alt="...">
+        @Html.ActionLink("Teacher", "Teacher", "Login", routeValues: null, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+        @Html.ActionLink("Admin", "Admin", "Login", routeValues: null, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+        @Html.ActionLink("Student", "Student", "Login", routeValues: null, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+        @Html.ActionLink("Employee", "Employee", "Login", routeValues: null, htmlAttributes: new { @class = "btn btn-primary btn-block" })
+    </div><!-- signin-box -->
+</div><!-- signin-wrapper -->

@@ -1,0 +1,38 @@
+﻿
+@{
+    ViewBag.Title = "ImportFile";
+}
+
+<div class="slim-mainpanel">
+    <div class="container">
+        <div class="slim-pageheader">
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page"> @Html.ActionLink("Add Account", "AddAccount", "Adminsion", new { id = "100" }, null)</li>
+                <li class="breadcrumb-item">@Html.ActionLink("Import File Excel", "ImportFile", "Adminsion", new { id = "200" }, null)</li>
+            </ol>
+            <h6 class="slim-pagetitle">Import File</h6>
+        </div><!-- slim-pageheader -->
+    </div>
+    <div class="section-wrapper">
+        <form class="row" action="form-validation.html" data-parsley-validate>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label class="form-control-label">Import File: <span class="tx-danger">*</span></label>
+                    <input class="form-control" type="file" placeholder="Member Code" data-placeholder="Class" data-parsley-class-handler="#slWrapper" data-parsley-errors-container="#slErrorContainer" required>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label class="ckbox">
+                        <input type="checkbox"><span>Xác Nhận Thông Tin</span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary pd-x-30">Submit</button>
+                </div><!-- col-4 -->
+            </div>
+        </form>
+    </div>
+</div><!-- section-wrapper -->

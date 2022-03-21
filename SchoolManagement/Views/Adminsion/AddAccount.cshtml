@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "AddAccount";
+}
+<div class="slim-mainpanel">
+    <div class="container">
+        <div class="slim-pageheader">
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item active" aria-current="page"> @Html.ActionLink("Add Account", "Index",    "Adminsion", new { id = "100" }, null)</li>
+                <li class="breadcrumb-item">@Html.ActionLink("Import File Excel", "ImportFile", "Adminsion", new { id = "200" }, null) </li>
+            </ol>
+            <h6 class="slim-pagetitle">Add Account</h6>
+        </div><!-- slim-pageheader -->
+    </div>
+
+
+    <div class="section-wrapper">
+        <form class="row" action="form-validation.html" data-parsley-validate>
+            <div class="form-layout">
+                <div class="row mg-b-25">
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label class="form-control-label">Fist Name: <span class="tx-danger">*</span></label>
+                            <input class="form-control" type="text" name="fistname" placeholder="Fist Name" data-placeholder="Class" data-parsley-class-handler="#slWrapper" data-parsley-errors-container="#slErrorContainer" required>
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label class="form-control-label">Last Name: <span class="tx-danger">*</span></label>
+                            <input class="form-control" type="text" name="lastname" placeholder="Last Name" data-placeholder="Class" data-parsley-class-handler="#slWrapper" data-parsley-errors-container="#slErrorContainer" required>
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="form-control-label">Member Code: <span class="tx-danger">*</span></label>
+                            <input class="form-control" type="text" name="number" placeholder="Member Code" data-placeholder="Class" data-parsley-class-handler="#slWrapper" data-parsley-errors-container="#slErrorContainer" required>
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label">Roll Number: <span class="tx-danger">*</span></label>
+                            <input class="form-control" type="text" name="number" placeholder="Roll Number" data-placeholder="Class" data-parsley-class-handler="#slWrapper" data-parsley-errors-container="#slErrorContainer" required>
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="form-control-label">Phone Number: <span class="tx-danger">*</span></label>
+                            <input class="form-control" type="text" name="number" placeholder="Phone Number" data-placeholder="Class" data-parsley-class-handler="#slWrapper" data-parsley-errors-container="#slErrorContainer" required>
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="form-control-label">Email: <span class="tx-danger">*</span></label>
+                            <input class="form-control" type="text" name="number" placeholder="Email" data-placeholder="Class" data-parsley-class-handler="#slWrapper" data-parsley-errors-container="#slErrorContainer" required>
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-md-5">
+                        <div class="form-group">
+                            <label class="form-control-label">Gender: <span class="tx-danger">*</span></label>
+                            <select class="form-control select2" data-placeholder="Choose one" data-parsley-class-handler="#slWrapper" data-parsley-errors-container="#slErrorContainer" required>
+                                <option label="Gender"></option>
+                                <option value="Firefox">Male</option>
+                                <option value="Chrome">Female</option>
+                                <option value="Safari">Others</option>
+                            </select>
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            <label class="form-control-label">Birthday: <span class="tx-danger">*</span></label>
+                            <input class="form-control" type="date" name="date" placeholder=" Birthday">
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="form-control-label">Address: <span class="tx-danger">*</span></label>
+                            <textarea rows="2" class="form-control" placeholder="Enter your address"></textarea>
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="form-control-label">Gender: <span class="tx-danger">*</span></label>
+                            <select class="form-control select2" data-placeholder="Choose one" data-parsley-class-handler="#slWrapper" data-parsley-errors-container="#slErrorContainer" required>
+                                <option label="Gender"></option>
+                                <option value="Student">Student</option>
+                                <option value="Teacher">Teacher</option>
+                                <option value="Parent">Parent</option>
+                                <option value="Attendant">Attendant</option>
+                            </select>
+                        </div>
+                    </div><!-- col-4 -->
+                    <div class="col-md-8">
+                        <div class="form-group">
+                            <label class="ckbox">
+                                <input type="checkbox"><span>Xác Nhận Thông Tin</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary pd-x-20">Submit</button>
+                        </div><!-- col-4 -->
+                    </div>
+        </form>
+    </div><!-- form-layout -->
+
+</div>
+

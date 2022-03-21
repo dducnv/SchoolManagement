@@ -2,15 +2,18 @@
 <div class="slim-header with-sidebar">
     <div class="container-fluid">
         <div class="slim-header-left">
-            <h2 class="slim-logo"><a href="index.html">FAI Portal</a></h2>
+            <h2 class="slim-logo"><a href="index.html">FAI Portal.</a></h2>
             <a href="" id="slimSidebarMenu" class="slim-sidebar-menu"><span></span></a>
         </div><!-- slim-header-left -->
         <div class="slim-header-right">
             <div class="dropdown dropdown-c">
                 <a href="#" class="logged-user" data-toggle="dropdown">
-                    <img src="http://via.placeholder.com/500x500" alt="">
-                    <span>Trịnh Đình Quân</span>
-                    <i class="fa fa-angle-down"></i>
+                    @using Microsoft.AspNet.Identity
+                    @if (Request.IsAuthenticated)
+                    {
+                      @User.Identity.GetUserName()
+                    }
+                    <i  class="fa fa-angle-down ml-1"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <nav class="nav">

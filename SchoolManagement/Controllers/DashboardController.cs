@@ -13,5 +13,17 @@ namespace SchoolManagement.Controllers
         {
             return View();
         }
+        public ActionResult Teacher()
+        {
+            return View();
+        }
+        public ActionResult Parent()
+        {
+            return View();
+        }
+        public ActionResult Student()
+        {
+            return View();
+        }
     }
 }

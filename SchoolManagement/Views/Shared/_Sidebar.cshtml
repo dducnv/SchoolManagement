@@ -1,15 +1,10 @@
 ﻿<div class="slim-sidebar">
     <label class="sidebar-label">Navigation</label>
     <ul class="nav nav-sidebar">
-        <li class="sidebar-nav-item with-sub">
-            <a href="" class="sidebar-nav-link"><i class="icon ion-ios-home-outline"></i> Dashboard</a>
-            <ul class="nav sidebar-nav-sub">
-                <li class="nav-sub-item"><a href="index.html" class="nav-sub-link">Dashboard 01</a></li>
-                <li class="nav-sub-item"><a href="index2.html" class="nav-sub-link">Dashboard 02</a></li>
-                <li class="nav-sub-item"><a href="index3.html" class="nav-sub-link">Dashboard 03</a></li>
-                <li class="nav-sub-item"><a href="index4.html" class="nav-sub-link">Dashboard 04</a></li>
-                <li class="nav-sub-item"><a href="index5.html" class="nav-sub-link">Dashboard 05</a></li>
-            </ul>
+        <li class="sidebar-nav-item">
+            <a href="@Url.Action( "Index", "Dashboard")" class="sidebar-nav-link">
+                <i class="icon ion-ios-home-outline"></i> Dashboard
+            </a>
         </li>
         <li class="sidebar-nav-item">
             <a href="page-messages.html" class="sidebar-nav-link"><i class="icon ion-ios-chatboxes-outline"></i> Messages</a>

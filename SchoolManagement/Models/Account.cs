@@ -8,6 +8,8 @@ namespace SchoolManagement.Models
 {
     public class Account : IdentityUser
     {
+        public string Firstname { get; set; }
+        public string Lastname { get; set; }
         public string roll_number { get; set; }
         public string gender { get; set; }
         public string address { get; set; }

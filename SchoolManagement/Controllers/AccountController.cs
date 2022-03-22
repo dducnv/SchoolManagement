@@ -56,24 +56,47 @@ namespace SchoolManagement.Controllers
             return View(login);
             
         }
-
-        public async Task<ActionResult> AddAccount()
+        [Authorize]
+        public ActionResult AddAccount()
         {
-            string password = "admin@123";
-            Account account = new Account()
-            {
-                UserName = "ducnv"
-            };
-            var result = await userManager.CreateAsync(account, password);
-            if (result.Succeeded)
-            {
-                return View("CreateAccountSuccess");
-            }
-            else
-            {
-                return View("CreateAccountFails");
-            }
+            return View();
         }
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> AddAccount([Bind(Include = "firstname,lastname,username,roll_number,password,email,phoneNumber,address,birthday,gender")] AddAcountViewModel accountView)
+        {
+            string password = accountView.password;
+            if (ModelState.IsValid)
+            {
+
+                Account account = new Account()
+                {
+                    Firstname = accountView.firstname,
+                    Lastname = accountView.lastname,
+                    UserName = accountView.username,
+                    Email = accountView.email,
+                    PhoneNumber = accountView.phoneNumber,
+                    gender = accountView.gender,
+                    roll_number= accountView.roll_number,
+                    address = accountView.address,
+                    birthday  = accountView.birthday
+                };
+                var result = await userManager.CreateAsync(account, password);
+                if (result.Succeeded)
+                {
+                    return View("CreateAccountSuccess");
+                }
+                else
+                {
+                    return View(accountView);
+                }
+            }
+            return View(accountView);
+
+           
+        }
+
         public async Task<ActionResult> AddRole()
         {
             Role role = new Role()

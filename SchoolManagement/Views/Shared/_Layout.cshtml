@@ -21,5 +21,14 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/scripts")
     @RenderSection("scripts", required: false)
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                select: {
+                    style: 'multi'
+                }
+            });
+        });
+    </script>
 </body>
 </html>

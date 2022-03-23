@@ -1,0 +1,401 @@
+﻿
+@{
+    ViewBag.Title = "Student";
+}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css"/>
+<div class="slim-mainpanel">
+    <div class="container">
+        <div class="slim-pageheader">
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+            </ol>
+            <h6 class="slim-pagetitle">Student</h6>
+        </div><!-- slim-pageheader -->
+        <div class="row mb-4">
+            <div class="col-lg-12">
+                <div class="card card-profile">
+                    <div class="card-body">
+                        <div class="media">
+                            <img src="https://intomau.com/Content/upload/images/quynh-aka-dieu.jpg" alt="">
+                            <div class="media-body">
+                                <h3 class="card-profile-name ml-3 mt-4">Dương Quỳnh Anh - TH2008052</h3>
+
+                            </div><!-- media-body -->
+                        </div><!-- media -->
+                        <table border="0" cellspacing="0" cellpadding="0" class="table text-nowrap mt-4">
+                            <tbody class="text-left border-0">
+                                <tr class="border-0">
+                                    <td>Name:</td>
+                                    <td class="font-medium text-dark-medium">Jessia Rose</td>
+                                </tr>
+                                <tr>
+                                    <td>Gender:</td>
+                                    <td class="font-medium text-dark-medium">Female</td>
+                                </tr>
+                                <tr>
+                                    <td>Father Name:</td>
+                                    <td class="font-medium text-dark-medium">Fahim Rahman</td>
+                                </tr>
+                                <tr>
+                                    <td>Mother Name:</td>
+                                    <td class="font-medium text-dark-medium">Jannatul Kazi</td>
+                                </tr>
+                                <tr>
+                                    <td>Date Of Birth:</td>
+                                    <td class="font-medium text-dark-medium">07.08.2006</td>
+                                </tr>
+                                <tr>
+                                    <td>Religion:</td>
+                                    <td class="font-medium text-dark-medium">Islam</td>
+                                </tr>
+                                <tr>
+                                    <td>Father Occupation:</td>
+                                    <td class="font-medium text-dark-medium">Graphic Designer</td>
+                                </tr>
+                                <tr>
+                                    <td>E-Mail:</td>
+                                    <td class="font-medium text-dark-medium">jessiarose@gmail.com</td>
+                                </tr>
+                                <tr>
+                                    <td>Admission Date:</td>
+                                    <td class="font-medium text-dark-medium">05.01.2019</td>
+                                </tr>
+                                <tr>
+                                    <td>Class:</td>
+                                    <td class="font-medium text-dark-medium">2</td>
+                                </tr>
+                                <tr>
+                                    <td>Section:</td>
+                                    <td class="font-medium text-dark-medium">Pink</td>
+                                </tr>
+                                <tr>
+                                    <td>Roll:</td>
+                                    <td class="font-medium text-dark-medium">10005</td>
+                                </tr>
+                                <tr>
+                                    <td>Adress:</td>
+                                    <td class="font-medium text-dark-medium">
+                                        House #10, Road #6,
+                                        Australia
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Phone:</td>
+                                    <td class="font-medium text-dark-medium">+ 88 9856418</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- card-body -->
+
+                </div><!-- card -->
+
+            </div><!-- col-8 -->
+
+        </div><!-- row -->
+        <div class="row">
+            <div class="col-sm-6 col-lg-3">
+                <div class="card card-status">
+                    <div class="media">
+                        <i class="icon fas fa-bell tx-purple"></i>
+                        <div class="media-body">
+                            <h1>32</h1>
+                            <p>Notification</p>
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                </div><!-- card -->
+            </div><!-- col-3 -->
+            <div class="col-sm-6 col-lg-3 mg-t-10 mg-sm-t-0">
+                <div class="card card-status">
+                    <div class="media">
+                        <i class="icon fas fa-calendar-alt tx-primary"></i>
+                        <div class="media-body">
+                            <h1>17</h1>
+                            <p>Events</p>
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                </div><!-- card -->
+            </div><!-- col-3 -->
+            <div class="col-sm-6 col-lg-3 mg-t-10 mg-lg-t-0">
+                <div class="card card-status">
+                    <div class="media">
+                        <i class="icon fas fa-percentage tx-primary"></i>
+                        <div class="media-body">
+                            <h1>61</h1>
+                            <p>Attendance</p>
+                        </div><!-- media-body -->
+                    </div><!-- media -->
+                </div><!-- card -->
+            </div><!-- col-3 -->
+        </div><!-- row -->
+        <div class="card-body" style="background-color: white; margin-top:20px">
+            <div class="heading-layout1">
+                <div class="item-title">
+                    <h3>All Exam Results</h3>
+                </div>
+                <div class="dropdown">
+                    <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">...</a>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                        <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                    </div>
+                </div>
+            </div>
+            <div class="table-box-wrap">
+            
+                <div class="table-responsive result-table-box">
+                    <div>
+                        <table  id="myTable">
+                            <thead>
+                                <tr role="row">
+                                    <th class="sorting_asc" rowspan="1" colspan="1" aria-label="ID" style="width: 129.297px;">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input checkAll">
+                                            <label class="form-check-label">ID</label>
+                                        </div>
+                                    </th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Exam Name: activate to sort column ascending" style="width: 138.531px;">Exam Name</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Subject: activate to sort column ascending" style="width: 104.25px;">Subject</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Grade: activate to sort column ascending" style="width: 69.7031px;">Grade</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Percent: activate to sort column ascending" style="width: 118.641px;">Percent</th>
+                                    <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date: activate to sort column ascending" style="width: 120.797px;">Date</th>
+                                    <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 76.7812px;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input">
+                                            <label class="form-check-label">#0021</label>
+                                        </div>
+                                    </td>
+                                    <td>Class Test</td>
+                                    <td>English</td>
+                                    <td>A</td>
+                                    <td>99.00 &gt; 100</td>
+                                    <td>22/02/2019</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="flaticon-more-button-of-three-dots"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr role="row" class="even">
+                                    <td class="sorting_1">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input">
+                                            <label class="form-check-label">#0022</label>
+                                        </div>
+                                    </td>
+                                    <td>Class Test</td>
+                                    <td>English</td>
+                                    <td>A</td>
+                                    <td>99.00 &gt; 100</td>
+                                    <td>22/02/2019</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="flaticon-more-button-of-three-dots"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input">
+                                            <label class="form-check-label">#0023</label>
+                                        </div>
+                                    </td>
+                                    <td>Class Test</td>
+                                    <td>Chemistry</td>
+                                    <td>A</td>
+                                    <td>99.00 &gt; 100</td>
+                                    <td>22/02/2019</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="flaticon-more-button-of-three-dots"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr role="row" class="even">
+                                    <td class="sorting_1">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input">
+                                            <label class="form-check-label">#0024</label>
+                                        </div>
+                                    </td>
+                                    <td>Class Test</td>
+                                    <td>English</td>
+                                    <td>A</td>
+                                    <td>99.00 &gt; 100</td>
+                                    <td>22/02/2019</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="flaticon-more-button-of-three-dots"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input">
+                                            <label class="form-check-label">#0025</label>
+                                        </div>
+                                    </td>
+                                    <td>Class Test</td>
+                                    <td>Chemistry</td>
+                                    <td>A</td>
+                                    <td>99.00 &gt; 100</td>
+                                    <td>22/02/2019</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="flaticon-more-button-of-three-dots"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr role="row" class="even">
+                                    <td class="sorting_1">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input">
+                                            <label class="form-check-label">#0025</label>
+                                        </div>
+                                    </td>
+                                    <td>Class Test</td>
+                                    <td>Chemistry</td>
+                                    <td>D</td>
+                                    <td>70.00 &gt; 100</td>
+                                    <td>22/02/2019</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="flaticon-more-button-of-three-dots"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input">
+                                            <label class="form-check-label">#0025</label>
+                                        </div>
+                                    </td>
+                                    <td>Class Test</td>
+                                    <td>English</td>
+                                    <td>C</td>
+                                    <td>80.00 &gt; 100</td>
+                                    <td>22/02/2019</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="flaticon-more-button-of-three-dots"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr role="row" class="even">
+                                    <td class="sorting_1">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input">
+                                            <label class="form-check-label">#0025</label>
+                                        </div>
+                                    </td>
+                                    <td>Class Test</td>
+                                    <td>English</td>
+                                    <td>B</td>
+                                    <td>99.00 &gt; 100</td>
+                                    <td>22/02/2019</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="flaticon-more-button-of-three-dots"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr role="row" class="odd">
+                                    <td class="sorting_1">
+                                        <div class="form-check">
+                                            <input type="checkbox" class="form-check-input">
+                                            <label class="form-check-label">#0025</label>
+                                        </div>
+                                    </td>
+                                    <td>First Semister</td>
+                                    <td>English</td>
+                                    <td>A</td>
+                                    <td>99.00 &gt; 100</td>
+                                    <td>22/02/2019</td>
+                                    <td>
+                                        <div class="dropdown">
+                                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="flaticon-more-button-of-three-dots"></span>
+                                            </a>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
+                                                <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table><div class="dataTables_paginate paging_simple_numbers" id="DataTables_Table_0_paginate"><a class="paginate_button previous disabled" aria-controls="DataTables_Table_0" data-dt-idx="0" tabindex="0" id="DataTables_Table_0_previous">Previous</a><span><a class="paginate_button current" aria-controls="DataTables_Table_0" data-dt-idx="1" tabindex="0">1</a></span><a class="paginate_button next disabled" aria-controls="DataTables_Table_0" data-dt-idx="2" tabindex="0" id="DataTables_Table_0_next">Next</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.jsa"></script>
+

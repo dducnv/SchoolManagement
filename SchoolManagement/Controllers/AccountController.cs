@@ -6,6 +6,7 @@ using SchoolManagement.ViewModels;
 using StudentManage.Data;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -59,14 +60,16 @@ namespace SchoolManagement.Controllers
         [Authorize]
         public ActionResult AddAccount()
         {
+            ViewBag.Name = new SelectList(db.Roles.Where(u => !u.Name.Contains("Admin"))
+                                   .ToList(), "Name", "Name");
             return View();
         }
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> AddAccount([Bind(Include = "firstname,lastname,username,roll_number,password,email,phoneNumber,address,birthday,gender")] AddAcountViewModel accountView)
+        public async Task<ActionResult> AddAccount([Bind(Include = "firstname,lastname,username,roll_number,password,email,phoneNumber,address,birthday,gender,Roles")] AddAcountViewModel accountView)
         {
-            string password = accountView.password;
+
             if (ModelState.IsValid)
             {
 
@@ -78,30 +81,37 @@ namespace SchoolManagement.Controllers
                     Email = accountView.email,
                     PhoneNumber = accountView.phoneNumber,
                     gender = accountView.gender,
-                    roll_number= accountView.roll_number,
+                    roll_number = accountView.roll_number,
                     address = accountView.address,
-                    birthday  = accountView.birthday
+                    birthday = accountView.birthday,
+
                 };
-                var result = await userManager.CreateAsync(account, password);
-                if (result.Succeeded)
+
+                var result = await userManager.CreateAsync(account, accountView.password);
+                Debug.WriteLine(result.ToString());
+                Debug.WriteLine(account.Id);
+                var role = await userManager.AddToRoleAsync(account.Id, accountView.Roles);
+                /*                var result = await userManager.AddToRolesAsync(userId, roleName1, roleName2);
+                */
+                if (role.Succeeded && result.Succeeded)
                 {
                     return View("CreateAccountSuccess");
                 }
                 else
                 {
-                    return View(accountView);
+                    return View("CreateAccountSuccess");
                 }
             }
             return View(accountView);
 
-           
+
         }
 
         public async Task<ActionResult> AddRole()
         {
             Role role = new Role()
             {
-                Name = "Admin"
+                Name = "TEACHER"
             };
             var result = await roleManager.CreateAsync(role);
             if (result.Succeeded)

@@ -42,6 +42,6 @@ namespace SchoolManagement.ViewModels
         public string birthday { get; set; }
         [DisplayName("Role")]
         [Required(ErrorMessage = "Please choose role")]
-        public List<Role> roles { get; set; }
+        public string Roles { get; set; }
     }
 }

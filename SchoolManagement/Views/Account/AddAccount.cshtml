@@ -12,7 +12,7 @@
                 <li class="breadcrumb-item">@Html.ActionLink("Import File Excel", "ImportFile", "Adminsion", new { id = "200" }, null) </li>
             </ol>
             <h6 class="slim-pagetitle">Add Account</h6>
-        </div><!-- slim-pageheader -->
+        </div><!-- slim-pageheader -->, 0
     </div>
 
 
@@ -65,15 +65,15 @@
                         <div class="col-md-8">
                             <div class="form-group">
                                 @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "form-control-label " })
-                                @Html.EditorFor(model => model.email, new { type = "email", @class = "form-control" })
+                                @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control" } })
                                 @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
 
                             </div>
                         </div><!-- col-4 -->
                         <div class="col-md-8">
                             <div class="form-group">
-                                @Html.LabelFor(model => model.password, htmlAttributes: new { @class = "form-control-label " })
-                                @Html.PasswordFor(model => model.password, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.LabelFor(model => model.password, new { @class = "form-control-label " })
+                                @Html.PasswordFor(model => model.password, new { @class = "form-control" })
                                 @Html.ValidationMessageFor(model => model.password, "", new { @class = "text-danger" })
 
                             </div>
@@ -86,7 +86,7 @@
                                          new SelectListItem{ Text="Male", Value = "0"},
                                          new SelectListItem{ Text="Femail", Value = "1"},
                                          new SelectListItem{ Text="Other", Value = "2"}
-                                      }, "Chọn", new { @class = "form-select" })
+                                      }, "Chọn", new { @class = "form-control" })
                                 @Html.ValidationMessageFor(m => m.gender, "", new { @class = "text-danger" })
 
                             </div>
@@ -107,22 +107,23 @@
 
                             </div>
                         </div><!-- col-4 -->
+                  
                         <div class="col-md-8">
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" select type="checkbox" id="inlineCheckbox1" value="option1">
-                                <label class="form-check-label" for="inlineCheckbox1">Student</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                <label class="form-check-label" for="inlineCheckbox2">Teacher</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                                <label class="form-check-label" for="inlineCheckbox1">Employee</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="option2">
-                                <label class="form-check-label" for="inlineCheckbox2">Admin</label>
+                            @* @foreach (var role in ViewBag.roles)
+        {
+            <div class="form-check form-check-inline">
+                <input name="role[]" class="form-check-input" select type="checkbox" id="inlineCheckbox1" value="@role.Name">
+                <label class="form-check-label" for="inlineCheckbox1">@role.Name</label>
+            </div>
+        }*@
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Roles, new { @class = "col-md-2 control-label" })
+                                <div class="col-md-10">
+                                    @*@Html.DropDownList("Name")*@
+                                    @Html.DropDownListFor(model => model.Roles, (SelectList)ViewBag.Name, "Chon")
+                                    @Html.ValidationMessageFor(model => model.Roles, "", new { @class = "text-danger" })
+
+                                </div>
                             </div>
                         </div><!-- col-4 -->
 

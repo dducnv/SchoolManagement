@@ -86,14 +86,19 @@ namespace SchoolManagement.Controllers
                     birthday = accountView.birthday,
 
                 };
+                /*     var password = "admin@123";
+                     Account account = new Account()
+                     {  
+                         UserName = "admin123",
+                     };*/
 
                 var result = await userManager.CreateAsync(account, accountView.password);
                 Debug.WriteLine(result.ToString());
                 Debug.WriteLine(account.Id);
-                var role = await userManager.AddToRoleAsync(account.Id, accountView.Roles);
+                var role = await userManager.AddToRoleAsync(account.Id, "ADMIN");
                 /*                var result = await userManager.AddToRolesAsync(userId, roleName1, roleName2);
                 */
-                if (role.Succeeded && result.Succeeded)
+                if ( result.Succeeded)
                 {
                     return View("CreateAccountSuccess");
                 }
@@ -111,7 +116,7 @@ namespace SchoolManagement.Controllers
         {
             Role role = new Role()
             {
-                Name = "TEACHER"
+                Name = "STUDENT"
             };
             var result = await roleManager.CreateAsync(role);
             if (result.Succeeded)

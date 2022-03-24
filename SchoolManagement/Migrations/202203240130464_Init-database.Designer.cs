@@ -13,7 +13,7 @@ namespace SchoolManagement.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "202203210239407_Init-database"; }
+            get { return "202203240130464_Init-database"; }
         }
         
         string IMigrationMetadata.Source

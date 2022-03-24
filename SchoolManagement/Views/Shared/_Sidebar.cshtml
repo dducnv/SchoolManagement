@@ -5,7 +5,6 @@
             <a href="@Url.Action( "Index", "Dashboard")" class="sidebar-nav-link">
                 <i class="icon ion-ios-home-outline"></i> Dashboard
             </a>
-<<<<<<< HEAD
         </li>
         <li class="sidebar-nav-item with-sub">
             <a href="" class="sidebar-nav-link">
@@ -29,18 +28,20 @@
                     @Html.ActionLink("Add User", "AddAccount", "Account",routeValues:null, htmlAttributes: new { @class = "nav-sub-link" })
                 </li>
             </ul>
-=======
->>>>>>> be448fa7b73acd5516136f5adf7fa75bf2e224f9
         </li>
-        <li class="sidebar-nav-item">
-            <a href="@Url.Action( "Index", "Dashboard")" class="sidebar-nav-link">
-                <i class="icon ion-ios-home-outline"></i> Dashboard
+        <li class="sidebar-nav-item with-sub">
+            <a href="" class="sidebar-nav-link">
+                <i class="icon ion-android-contacts"></i>
+                Courses & Subject
             </a>
-        </li>
-        <li class="sidebar-nav-item">
-            <a href="@Url.Action( "Index", "Dashboard")" class="sidebar-nav-link">
-                <i class="icon ion-ios-home-outline"></i> Dashboard
-            </a>
+            <ul class="nav sidebar-nav-sub">
+                <li class="nav-sub-item">
+                    @Html.ActionLink("Courses", "ListUser", "Account", htmlAttributes: new { @class = "nav-sub-link" })
+                </li>
+                <li class="nav-sub-item">
+                    @Html.ActionLink("Subject", "ListUser", "Account", htmlAttributes: new { @class = "nav-sub-link" })
+                </li>
+            </ul>
         </li>
     </ul>
 </div>

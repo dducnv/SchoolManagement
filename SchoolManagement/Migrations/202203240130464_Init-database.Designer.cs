@@ -7,13 +7,13 @@ namespace SchoolManagement.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.0-30225")]
-    public sealed partial class updateaccount : IMigrationMetadata
+    public sealed partial class Initdatabase : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(updateaccount));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Initdatabase));
         
         string IMigrationMetadata.Id
         {
-            get { return "202203211532510_update-account"; }
+            get { return "202203240130464_Init-database"; }
         }
         
         string IMigrationMetadata.Source

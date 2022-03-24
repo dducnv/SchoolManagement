@@ -8,11 +8,22 @@ namespace SchoolManagement.Migrations
         public override void Up()
         {
             CreateTable(
+                "dbo.Classes",
+                c => new
+                    {
+                        id = c.Int(nullable: false, identity: true),
+                        class_code = c.String(),
+                        name = c.String(),
+                    })
+                .PrimaryKey(t => t.id);
+            
+            CreateTable(
                 "dbo.AspNetRoles",
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
                         Name = c.String(nullable: false, maxLength: 256),
+                        Discriminator = c.String(nullable: false, maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)
                 .Index(t => t.Name, unique: true, name: "RoleNameIndex");
@@ -35,6 +46,8 @@ namespace SchoolManagement.Migrations
                 c => new
                     {
                         Id = c.String(nullable: false, maxLength: 128),
+                        Firstname = c.String(),
+                        Lastname = c.String(),
                         roll_number = c.String(),
                         gender = c.String(),
                         address = c.String(),
@@ -98,6 +111,7 @@ namespace SchoolManagement.Migrations
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.Classes");
         }
     }
 }

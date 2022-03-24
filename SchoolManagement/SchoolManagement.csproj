@@ -158,19 +158,20 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AdminsionController.cs" />
+    <Compile Include="Controllers\ClassController.cs" />
+    <Compile Include="Controllers\CoursesController.cs" />
+    <Compile Include="Controllers\DashboardController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Data\MyDBContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202203210239407_Init-database.cs" />
-    <Compile Include="Migrations\202203210239407_Init-database.Designer.cs">
-      <DependentUpon>202203210239407_Init-database.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202203210426262_class.cs" />
-    <Compile Include="Migrations\202203210426262_class.Designer.cs">
-      <DependentUpon>202203210426262_class.cs</DependentUpon>
+    <Compile Include="Migrations\202203240130464_Init-database.cs" />
+    <Compile Include="Migrations\202203240130464_Init-database.Designer.cs">
+      <DependentUpon>202203240130464_Init-database.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Account.cs" />
@@ -185,9 +186,15 @@
     <Compile Include="Models\Subject.cs" />
     <Compile Include="Models\Timetable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModels\AddAcountViewModel.cs" />
     <Compile Include="ViewModels\LoginViewModel.cs" />
+    <Compile Include="ViewModels\MultiModelAccount.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\SchoolManage.mdf" />
+    <Content Include="App_Data\SchoolManage_log.ldf">
+      <DependentUpon>SchoolManage.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\all.css" />
     <Content Include="Content\all.min.css" />
     <Content Include="Content\app.css" />
@@ -385,10 +392,18 @@
     <Content Include="Views\Login\Student.cshtml" />
     <Content Include="Views\Login\Teacher.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Adminsion\AddAccount.cshtml" />
+    <Content Include="Views\Adminsion\ImportFile.cshtml" />
+    <Content Include="Views\Adminsion\Index.cshtml" />
+    <Content Include="Views\Class\Index.cshtml" />
+    <Content Include="Views\Courses\Index.cshtml" />
+    <Content Include="Views\Dashboard\Index.cshtml" />
+    <Content Include="Views\Dashboard\Parent.cshtml" />
+    <Content Include="Views\Dashboard\Student.cshtml" />
+    <Content Include="Views\Dashboard\Teacher.cshtml" />
+    <Content Include="Views\Profile\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
@@ -401,11 +416,8 @@
     <TypeScriptCompile Include="Scripts\index.d.ts" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202203210239407_Init-database.resx">
-      <DependentUpon>202203210239407_Init-database.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202203210426262_class.resx">
-      <DependentUpon>202203210426262_class.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202203240130464_Init-database.resx">
+      <DependentUpon>202203240130464_Init-database.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

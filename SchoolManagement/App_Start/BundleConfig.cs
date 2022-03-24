@@ -19,15 +19,20 @@ namespace SchoolManagement
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
                         "~/Scripts/modernizr-*"));
 
-            bundles.Add(new ScriptBundle("~/bundles/scripts").Include(
+            bundles.Add(new Bundle("~/bundles/scripts").Include(
                   "~/Scripts/popper.min.js",
-                  "~/Scripts/bootstrap.bundle.min.js",
-                  "~/Scripts/app.js"));
+                  "~/Scripts/bootstrap.js",
+                  "~/Scripts/jquery.dataTables.min.js",
+                  "~/Scripts/app.js",
+                  "~/Scripts/dataTable.js"));
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/ionicons/css/ionicons.css",
                       "~/Content/all.min.css",
-                      "~/Content/app.css"));
+                       "~/Content/jquery.dataTables.css",
+                      "~/Content/app.css"
+                    ));
         }
     }
 }

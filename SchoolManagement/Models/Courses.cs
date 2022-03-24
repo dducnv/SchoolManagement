@@ -9,6 +9,6 @@ namespace SchoolManagement.Models
     {
         public int id { get; set; }
         public string name { get; set; }
-        public string semester { get; set; }
+        public string course_code { get; set; }
     }
 }

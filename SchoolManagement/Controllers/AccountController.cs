@@ -57,14 +57,12 @@ namespace SchoolManagement.Controllers
             return View(login);
             
         }
-        [Authorize]
         public ActionResult AddAccount()
         {
             ViewBag.Name = new SelectList(db.Roles.Where(u => !u.Name.Contains("Admin"))
                                    .ToList(), "Name", "Name");
             return View();
         }
-        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddAccount([Bind(Include = "firstname,lastname,username,roll_number,password,email,phoneNumber,address,birthday,gender,Roles")] AddAcountViewModel accountView)
@@ -95,7 +93,8 @@ namespace SchoolManagement.Controllers
                 var result = await userManager.CreateAsync(account, accountView.password);
                 Debug.WriteLine(result.ToString());
                 Debug.WriteLine(account.Id);
-                var role = await userManager.AddToRoleAsync(account.Id, "ADMIN");
+                
+                var role = await userManager.AddToRoleAsync(account.Id, accountView.Roles);
                 /*                var result = await userManager.AddToRolesAsync(userId, roleName1, roleName2);
                 */
                 if ( result.Succeeded)

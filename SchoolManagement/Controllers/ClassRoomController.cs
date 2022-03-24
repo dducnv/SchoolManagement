@@ -9,34 +9,32 @@ using System.Web.Mvc;
 
 namespace SchoolManagement.Controllers
 {
-    public class ClassController : Controller
+    public class ClassRoomController : Controller
     {
         private MyDBContext myDBContext = new MyDBContext();
-
-        // GET: Class
-        public ActionResult Index()
+        // GET: ClassRoom
+        public ActionResult AddClassRoom()
         {
             return View();
         }
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveClass([Bind(Include = "name,description,class_code")] ClassViewModel cls)
+        public ActionResult AddClassRoom([Bind(Include = "name,description,status")] ClassRoomViewModel clsr)
         {
             if (ModelState.IsValid)
             {
-                Class classModel = new Class()
+                Classroom classModel = new Classroom()
                 {
-                    name = cls.name,
-                    class_code = cls.class_code,
-                    description = cls.description,
+                    name = clsr.name,
+                    status = clsr.status,
+                    description = clsr.description,
                 };
-                myDBContext.classes.Add(classModel);  
+                myDBContext.Classrooms.Add(classModel);
                 myDBContext.SaveChanges();
-                return RedirectToAction("Index","Home");
+                return RedirectToAction("Index", "Home");
             }
-            return View(cls);
+            return View();
         }
-
     }
 }

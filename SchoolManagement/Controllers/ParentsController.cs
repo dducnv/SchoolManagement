@@ -6,12 +6,13 @@ using System.Web.Mvc;
 
 namespace SchoolManageASP.Controllers
 {
-    public class AdminController : Controller
+    public class ParentsController : Controller
     {
-        // GET: Admin
+        // GET: Parents
         public ActionResult Index()
         {
             return View();
         }
+
     }
 }

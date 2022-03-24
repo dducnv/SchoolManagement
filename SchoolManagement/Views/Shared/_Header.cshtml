@@ -13,11 +13,16 @@
                     {
                       @User.Identity.GetUserName()
                     }
-                    <i  class="fa fa-angle-down ml-1"></i>
+                  <i  class="fa fa-angle-down ml-1"></i>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <nav class="nav">
-                        <a href="page-profile.html" class="nav-link"><i class="icon ion-person"></i> View Profile</a>
+                        <a href="@Url.Action("Index", "Profile")" class="nav-link">
+                            <i class="icon ion-person"></i>
+                            <span>
+                                Profile
+                            </span>
+                        </a>
                         <a href="page-settings.html" class="nav-link"><i class="icon ion-ios-gear"></i> Account Settings</a>
                         <a href="page-signin.html" class="nav-link"><i class="icon ion-forward"></i> Sign Out</a>
                     </nav>

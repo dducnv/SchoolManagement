@@ -7,9 +7,11 @@ namespace SchoolManagement.Models
 {
     public class Classroom
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string description { get; set; }
-        public int status { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public int Status { get; set; }
+        public virtual ICollection<Timetable> Timetables { get; set; }
+
     }
 }

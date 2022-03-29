@@ -1,0 +1,197 @@
+﻿@model SchoolManagement.ViewModels.StudentGroupViewModel
+@{
+    ViewBag.Title = "Student Group";
+}
+<div class="slim-pageheader">
+    <ol class="breadcrumb slim-breadcrumb">
+        <li class="breadcrumb-item">
+            <button class="btn btn-outline-primary btn-block mg-b-10" data-toggle="modal" data-target="#addsubject">Add Subject</button>
+        </li>
+    </ol>
+    <h6 class="slim-pagetitle">Subject</h6>
+</div>
+<!-- MODAL GRID -->
+<div id="addsubject" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Add Subject</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pd-20">
+                @using (Html.BeginForm("SaveStudentGroup", "StudentGroup"))
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.AntiForgeryToken()
+                    <div class="form-group bd-t-0-force mg-b-10">
+                        @Html.LabelFor(m => m.ClassName, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.ClassName, new { @class = "form-control wd-700" })
+                        @Html.ValidationMessageFor(m => m.ClassName, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group bd-t-0-force mg-b-10">
+                        @Html.LabelFor(m => m.Courses_id, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.Courses_id, (SelectList)ViewBag.Courses, "choose", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Courses_id, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group bd-t-0-force mg-b-10">
+                        @Html.LabelFor(m => m.Session, new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.Session, new List<SelectListItem>
+                           {
+                              new SelectListItem{ Text="Morning", Value = "MORNING" },
+                              new SelectListItem{ Text="Afternoon", Value = "AFTERNOON" },
+                              new SelectListItem{ Text="Night", Value = "NIGHT" }
+                           }, "Choose Session", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Session, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group bd-t-0-force mg-b-10">
+                        @Html.LabelFor(m => m.Shift, new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.Shift, new List<SelectListItem>
+                           {
+                              new SelectListItem{ Text="Monday-Wednesday-Friday", Value = "MWF" },
+                              new SelectListItem{ Text="Tuesday-Thursday-Saturday", Value = "TTS" }
+                           }, "Choose Session", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Shift, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group bd-t-0-force mg-b-10">
+                        @Html.LabelFor(m => m.OpeningDate, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.OpeningDate, new { @class = "form-control wd-700", type="Date" ,min=DateTime.Now.Date.ToString("yyyy-MM-dd")})
+                        @Html.ValidationMessageFor(m => m.OpeningDate, "", new { @class = "text-danger" })
+                    </div>
+                    <button type="submit" class="btn btn-primary mg-t-10">Submit</button>
+
+                }
+            </div>
+        </div>
+    </div><!-- modal-dialog -->
+</div><!-- modal -->
+
+<div class="section-wrapper">
+    <table id="datatable1" class="table display responsive nowrap">
+        <thead>
+            <tr>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.ClassName)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.Courses_id)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.Session)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.Shift)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.OpeningDate)</th>
+                <th>Add Student</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewData["StudentGroup"] == null)
+            {
+                <tr>
+                    <td colspan="6">Course Empty!</td>
+                </tr>
+            }
+            else
+            {
+
+                foreach (var studentGroup in ViewData["StudentGroup"] as IList<SchoolManagement.Models.StudentGroup>)
+                {
+            <tr>
+            <td>@studentGroup.ClassName</td>
+            <td>@studentGroup.CoursesId</td>
+            <td>@studentGroup.Session</td>
+            <td>@studentGroup.Shift</td>
+            <td>@studentGroup.OpeningDate</td>
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#addStudent">Add Student</button>
+                        <div id="addStudent" class="modal fade">
+                            <div class="modal-dialog modal-lg" role="document">
+                                <div class="modal-content ">
+                                    <div class="modal-header">
+                                        <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Add Students For @studentGroup.ClassName</h6>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body pd-20">
+                                        <table id="datatable2" class="table display responsive nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th>
+                                                        <div class="form-check">
+                                                            <input onClick="toggle(this)" class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                            <label class="form-check-label" for="defaultCheck1">
+                                                                Select 10 Students
+                                                            </label>
+                                                        </div>
+                                                    <th>
+                                                    <th>Roll Number</th>
+                                                    <th>Full Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @using (Html.BeginForm("AddStudent", "StudentGroup"))
+                                                {
+                                                   
+                                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                    @Html.AntiForgeryToken()
+                                                    <input hidden type="text" name="studentgr_id" value="@studentGroup.Id" />
+                                                    foreach (var student in ViewData["Student"] as IList<SchoolManagement.Models.Account>)
+                                                    {
+
+                                                        
+                          @*                              foreach (var studentChecked in ViewData["StudentChecked"] as IList<SchoolManagement.Models.Students_StudentGroup>)
+                                                        {
+
+                                                            if (studentChecked.StudentGroupId == studentGroup.Id && studentChecked.AccountId == student.Id)
+                                                            {
+                                                                ViewData[studentGroup.Id + student.Id] = "checked";
+                                                            }
+                                                            else
+                                                            {
+                                                                ViewData[studentGroup.Id + student.Id] = null;
+                                                            }
+                                                        }*@
+                                                        <tr>
+                                                            <td>
+                                                                <input name="student"
+                                                                       type="checkbox"
+                                                                     @*  @ViewData[studentGroup.Id + student.Id]*@
+                                                                       value="@student.Id"
+                                                                       id="defaultCheck1">
+                                                            </td>
+                                                            <td>@student.roll_number</td>
+                                                            <td>@student.Firstname @student.Lastname</td>
+                                                        </tr>
+
+                                                    }
+
+                                                    <button class="btn btn-primary" type="submit">Submit</button>
+                                                }
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div><!-- modal-dialog -->
+                      </div><!-- modal -->
+                </div>
+            </td>
+            <td>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-secondary">Left</button>
+                    <button type="button" class="btn btn-secondary">Right</button>
+                </div>
+            </td>
+        </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<script>
+    function toggle(source) {
+  checkboxes = document.getElementsByName('student');
+  for(var i=0, n=10;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+</script>
+

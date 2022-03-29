@@ -7,12 +7,15 @@ namespace SchoolManagement.Models
 {
     public class Subject
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public  string sub_code { get; set; }
-        public  string courses_id { get; set; }
-        public  string semester { get; set; }
-        public  string description { get; set; }
-        public  int status { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Sub_code { get; set; }
+        public int CoursesId { get; set; }
+        public int Semester { get; set; }
+        public int Slot { get; set; }
+        public  int Status { get; set; }
+        public virtual Courses Courses { get; set; }
+        public virtual ICollection<Timetable> Timetables { get; set; }
+
     }
 }

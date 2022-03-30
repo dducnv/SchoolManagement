@@ -11,9 +11,12 @@
     });
 
     $('#datatable2').DataTable({
-        bLengthChange: false,
-        searching: false,
-        responsive: true
+        responsive: true,
+        language: {
+            searchPlaceholder: 'Search...',
+            sSearch: '',
+            lengthMenu: '_MENU_ items/page',
+        }
     });
 
     // Select2

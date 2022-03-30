@@ -7,8 +7,10 @@ namespace SchoolManagement.Models
 {
     public class Courses
     {
-        public int id { get; set; }
-        public string name { get; set; }
-        public string course_code { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Course_code { get; set; }
+        public virtual ICollection<Subject> Subjects { get; set; }
+        public virtual ICollection<StudentGroup> StudentGroups { get; set; }
     }
 }

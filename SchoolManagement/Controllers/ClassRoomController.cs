@@ -1,10 +1,7 @@
 ﻿using SchoolManagement.Models;
 using SchoolManagement.ViewModels;
 using StudentManage.Data;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SchoolManagement.Controllers
@@ -13,8 +10,9 @@ namespace SchoolManagement.Controllers
     {
         private MyDBContext myDBContext = new MyDBContext();
         // GET: ClassRoom
-        public ActionResult AddClassRoom()
+        public ActionResult Index()
         {
+            ViewData["Classroom"] = myDBContext.classrooms.ToList();
             return View();
         }
         [HttpPost]
@@ -24,15 +22,15 @@ namespace SchoolManagement.Controllers
         {
             if (ModelState.IsValid)
             {
-                Classroom classModel = new Classroom()
+                Classroom clrModel = new Classroom()
                 {
-                    name = clsr.name,
-                    status = clsr.status,
-                    description = clsr.description,
+                    Name = clsr.name,
+                    Status = clsr.status,
+                    Description = clsr.description,
                 };
-                myDBContext.Classrooms.Add(classModel);
+                myDBContext.classrooms.Add(clrModel);
                 myDBContext.SaveChanges();
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index");
             }
             return View();
         }

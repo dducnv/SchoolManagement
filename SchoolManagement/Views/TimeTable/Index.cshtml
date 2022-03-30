@@ -1,0 +1,121 @@
+﻿@model SchoolManagement.ViewModels.TimetableViewModel
+@{
+    ViewBag.Title = "Student Group";
+}
+<div class="slim-pageheader">
+    <ol class="breadcrumb slim-breadcrumb">
+        <li class="breadcrumb-item">
+            <button class="btn btn-outline-primary btn-block mg-b-10" data-toggle="modal" data-target="#addsubject">Add Subject</button>
+        </li>
+    </ol>
+    <h6 class="slim-pagetitle">Subject</h6>
+</div>
+<!-- MODAL GRID -->
+<div id="addsubject" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content ">
+            <div class="modal-header">
+                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Add Subject</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body pd-20">
+                @using (Html.BeginForm("SaveTimetable", "Timetable"))
+                {
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    @Html.AntiForgeryToken()
+                    <div class="form-group bd-t-0-force mg-b-10">
+                        @Html.LabelFor(m => m.StudentGroupId, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.StudentGroupId, (SelectList)ViewBag.StudentGroup, "choose", new { @class = "form-control wd-700" })
+                        @Html.ValidationMessageFor(m => m.StudentGroupId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group bd-t-0-force mg-b-10">
+                        @Html.LabelFor(m => m.ClassroomId, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.ClassroomId, (SelectList)ViewBag.Classroom, "choose", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.ClassroomId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group bd-t-0-force mg-b-10">
+                        @Html.LabelFor(m => m.CoursesId, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.CoursesId, (SelectList)ViewBag.Courses, "choose", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.CoursesId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group bd-t-0-force mg-b-10">
+                        @Html.LabelFor(m => m.Semester, new { @class = "form-label" })
+                        @Html.DropDownListFor(m => m.Semester, new List<SelectListItem>
+                           {
+                              new SelectListItem{ Text="Semester 1", Value = "1" },
+                              new SelectListItem{ Text="Semester 2", Value = "2" },
+                              new SelectListItem{ Text="Semester 3", Value = "3" },
+                              new SelectListItem{ Text="Semester 4", Value = "4" },
+                           }, "Choose Semester", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.Semester, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group bd-t-0-force mg-b-10">
+                            @Html.LabelFor(m => m.Date, new { @class = "form-label" })
+                            @Html.TextBoxFor(m => m.Date, new { @class = "form-control wd-700", type = "Date", min = DateTime.Now.Date.ToString("yyyy-MM-dd") })
+                            @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
+                        </div>
+                        <div class="form-group bd-t-0-force mg-b-10">
+                            @Html.LabelFor(m => m.AccountId, new { @class = "form-label" })
+                            @Html.DropDownListFor(model => model.AccountId, (SelectList)ViewBag.Lecturer, "choose", new { @class = "form-control" })
+                            @Html.ValidationMessageFor(m => m.AccountId, "", new { @class = "text-danger" })
+                        </div>
+
+                        <button type="submit" class="btn btn-primary mg-t-10">Submit</button>
+
+                        }
+                    </div>
+                </div>
+    </div><!-- modal-dialog -->
+</div><!-- modal -->
+
+@*<div class="section-wrapper">
+    <table id="datatable1" class="table display responsive nowrap">
+        <thead>
+            <tr>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.StudentGroupId)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.ClassroomId)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.CoursesId)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.AccountId)</th>
+                <th>Add Student</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (ViewData["StudentGroup"] == null)
+            {
+                <tr>
+                    <td colspan="6">Course Empty!</td>
+                </tr>
+            }
+            else
+            {
+
+                foreach (var studentGroup in ViewData["StudentGroup"] as IList<SchoolManagement.Models.StudentGroup>)
+                {
+                    <tr>
+                        <td>@studentGroup.ClassName</td>
+                        <td>@studentGroup.CoursesId</td>
+                        <td>@studentGroup.Session</td>
+                        <td>@studentGroup.Shift</td>
+                        <td>@studentGroup.OpeningDate</td>
+                        <td>
+                           
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-secondary">Left</button>
+                                <button type="button" class="btn btn-secondary">Right</button>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>*@
+
+
+
+

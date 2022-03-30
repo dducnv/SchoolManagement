@@ -7,5 +7,6 @@ namespace SchoolManagement.Models
 {
     public class Attendance
     {
+        
     }
 }

@@ -11,12 +11,15 @@ namespace StudentManage.Data
     public class MyDBContext : IdentityDbContext<Account>
     {
 
-        public MyDBContext():base("name=SchoolManageDB")
+        public MyDBContext():base("SchoolManageDB")
         {
 
         }
         public DbSet<Courses> courses { get; set; }
-        public DbSet<Class> classes { get; set; }
-        public DbSet<Classroom> Classrooms { get; set; }
+        public DbSet<Subject> subjects { get; set; }
+        public DbSet<Classroom> classrooms { get; set; }
+        public DbSet<StudentGroup> studentGroups { get; set; }
+        public DbSet<Students_StudentGroup> Students_StudentGroups { get; set; }
+        public DbSet<Timetable> Timetables { get; set; }
     }
 }

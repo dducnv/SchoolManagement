@@ -1,0 +1,79 @@
+﻿@model SchoolManagement.ViewModels.ClassRoomViewModel
+
+@{
+    ViewBag.Title = "AddClassRoom";
+}
+
+<div class="section-wrapper">
+    <div class="row">
+        <div class="col-md-4">
+            @using (Html.BeginForm("AddClassRoom", "ClassRoom"))
+            {
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    @Html.LabelFor(m => m.name, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.name, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.description, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.description, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.description, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.status, new { @class = "form-label" })
+                    @Html.TextBoxFor(m => m.status, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(m => m.status, "", new { @class = "text-danger" })
+                </div>
+                <div class="form-group">
+                    <label class="ckbox">
+                        <input type="checkbox"><span>Xác Nhận Thông Tin</span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary pd-x-20">Button</button>
+                </div>
+            }
+        </div>
+
+        <div class="col-md-8">
+            <table id="datatable1" class="table display responsive nowrap">
+                <thead>
+                    <tr>
+                        <th class="wd-15p">@Html.DisplayNameFor(m => m.name)</th>
+                        <th class="wd-15p">@Html.DisplayNameFor(m => m.description)</th>
+                        <th class="wd-15p">@Html.DisplayNameFor(m => m.status)</th>
+                        <th class="wd-15p">Acction</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (ViewData["Classroom"] == null)
+                    {
+                        <tr>
+                            <td colspan="3">Course Empty!</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        foreach (var clr in ViewData["Classroom"] as IList<SchoolManagement.Models.Classroom>)
+                        {
+                <tr>
+                    <td>@clr.Name</td>
+                    <td>@clr.Description</td>
+                    <td>@clr.Status</td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <button type="button" class="btn btn-secondary">Left</button>
+                            <button type="button" class="btn btn-secondary">Right</button>
+                        </div>
+                    </td>
+                </tr>
+
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div><!-- section-wrapper -->

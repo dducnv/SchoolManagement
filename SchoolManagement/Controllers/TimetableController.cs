@@ -30,7 +30,7 @@ namespace SchoolManagement.Controllers
             var subject = db.subjects.Where(s => s.CoursesId == timetableViewModel.CoursesId && s.Semester == timetableViewModel.Semester).ToList();
             var studentGroup = db.studentGroups.Where(st => st.CoursesId == timetableViewModel.CoursesId && st.Id == timetableViewModel.StudentGroupId).FirstOrDefault();
             DateTime startDate = Convert.ToDateTime(timetableViewModel.Date);
-            var i = 0;
+            
             var shift = studentGroup.Shift;
             var session = "";
             if(studentGroup.Session == "MORNING")
@@ -44,12 +44,14 @@ namespace SchoolManagement.Controllers
                 session = "18:00 - 22:00";
             }
             var slot = 0;
+            var i = 0;
             foreach (var sub in subject)
             {
                 Debug.WriteLine(sub.Sub_code);
 
                 slot =  sub.Slot;
                 var subCode = sub.Sub_code;
+                i = 0;
                 while (i < slot)
                 {
                     Debug.WriteLine(sub.Sub_code);
@@ -57,8 +59,8 @@ namespace SchoolManagement.Controllers
                     {
                         if (startDate.ToString("ddd") == "Mon" || startDate.ToString("ddd") == "Wed" || startDate.ToString("ddd") == "Fri")
                         {
-                           
-           /*                Debug.WriteLine(startDate.ToString("ddd dd-MM-yyyy"));
+
+                            Debug.WriteLine(startDate.ToString("ddd dd-MM-yyyy"));
                             Timetable timetable = new Timetable
                             {
                                 Name = sub.Sub_code,
@@ -70,7 +72,7 @@ namespace SchoolManagement.Controllers
                                 AccountId = timetableViewModel.AccountId,
                                 StudentGroupId = timetableViewModel.StudentGroupId
                             };
-                            db.Timetables.Add(timetable);*/
+                            db.Timetables.Add(timetable);
                             i++;
                         }
                         startDate = startDate.AddDays(1);
@@ -105,5 +107,6 @@ namespace SchoolManagement.Controllers
             
             return RedirectToAction("Index");
         }
+        
     }
 }

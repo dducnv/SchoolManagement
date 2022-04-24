@@ -49,10 +49,10 @@ namespace SchoolManagement.Controllers
         [HttpPost]
         public ActionResult AddStudent(string []student,int studentgr_id)
         {
-            var studentInGr = db.Students_StudentGroups.ToList();
+            var studentInGr = db.Students_StudentGroups.Where(m => m.StudentGroupId == studentgr_id).ToList();
             foreach (var item in studentInGr)
             {
-                if(item.Id == studentgr_id)
+                if(item.StudentGroupId == studentgr_id)
                 {
                     db.Students_StudentGroups.Remove(item);
                     db.SaveChanges();
@@ -60,8 +60,9 @@ namespace SchoolManagement.Controllers
             }
             foreach (var item in student)
             {
+                Debug.WriteLine(item);
                 Students_StudentGroup students_StudentGroup = new Students_StudentGroup()
-                {           
+                {
                     AccountId = item,
                     StudentGroupId = studentgr_id
                 };

@@ -1,0 +1,98 @@
+﻿@model SchoolManagement.Models.Timetable
+@{
+    ViewBag.Title = "Details";
+}
+<div class="slim-mainpanel">
+    <div class="container">
+        <div class="slim-pageheader">
+            <ol class="breadcrumb slim-breadcrumb">
+                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Attendance</li>
+            </ol>
+            <h6 class="slim-pagetitle">Attendance for  @Html.DisplayFor(model => model.StudentGroup.ClassName)</h6>
+        </div><!-- slim-pageheader -->
+        <div class="card card-invoice">
+            <div class="card-body">
+                @using (Html.BeginForm("SaveAttendance", "Attendance"))
+                {
+                    @Html.HiddenFor(model => model.Id, htmlAttributes: new { @class = "TimetableId ", name = "TimetableId" })
+
+                    <div class="invoice-header">
+                        <h1 class="invoice-title">ATTENDANCE</h1>
+                        <div class="billed-from">
+                            <h3><span class="text-primary">Class:</span>   @Html.DisplayFor(model => model.StudentGroup.ClassName)</h3>
+                            <h3><span class="text-primary">Semester:</span> @Html.DisplayFor(model => model.Semester)</h3>
+                            <h3><span class="text-primary">Subject:</span> @Html.DisplayFor(model => model.Subject.Name)</h3>
+                            <h3><span class="text-primary">Date:</span> @Html.DisplayFor(model => model.Date)</h3>
+                            <h3><span class="text-primary">Duration:</span> @Html.DisplayFor(model => model.Duration)</h3>
+
+                        </div><!-- billed-from -->
+                    </div><!-- invoice-header -->
+
+                    <div class="table-responsive mg-t-40 pb-4">
+                        <table id="datatable2" class="table table-invoice">
+                            <thead>
+                                <tr>
+                                    <th class="wd-20p">Roll Number</th>
+                                    <th>Full Name</th>
+                                    <th>
+                                        Attendance
+                                    </th>
+                                    <th>Note</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var student in ViewData["Attendance"] as IList<SchoolManagement.Models.Attendance>)
+                                {
+                                    <tr>
+                                        <td class="text-uppercase">@student.Account.roll_number</td>
+                                        <td class="text-capitalize">@student.Account.Lastname @student.Account.Firstname </td>
+                                        <td>
+                                            @if (student.Attend == 1)
+                                            {
+                                                <span class="badge badge-success">Present</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-danger">Absent</span>
+                                            }
+                                        </td>
+                                        <td>
+                                            @if (student.Note != null)
+                                            {
+                                                <p>
+                                                    @student.Note
+                                                </p>
+                                            }
+                                            else
+                                            {
+                                                <spam>
+                                                    Empty
+                                                </spam>
+
+                                            }
+
+                                        </td>
+                                    </tr>
+                                }
+
+                            </tbody>
+                        </table>
+                    </div><!-- table-responsive -->
+
+                    <hr class="mg-b-60">
+                    @Html.ActionLink("Edit", "Index", "Attendance", new { id = Model.Id  },htmlAttributes: new { @class = "btn btn-warning btn-block" })
+                }
+            </div><!-- card-body -->
+        </div><!-- card -->
+
+    </div><!-- container -->
+</div><!-- slim-mainpanel -->
+<script>
+    function toggle(source) {
+        checkboxes = document.getElementsByName("studentAttend");
+        for (var i = 0, n = checkboxes.length; i < n; i++) {
+            checkboxes[i].checked = source.checked;
+        }
+    }
+</script>

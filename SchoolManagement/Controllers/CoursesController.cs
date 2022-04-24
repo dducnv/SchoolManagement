@@ -19,12 +19,14 @@ namespace SchoolManagement.Controllers
         // GET: Courses
         public ActionResult Index()
         {
+            ViewBag.CoursesSelect = new SelectList(db.courses.ToList(), "id", "course_code");
+            ViewData["Subject"] = db.subjects.ToList();
             ViewData["Courses"] = db.courses.ToList();
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult SaveCourse([Bind(Include = "name,course_code")] CoursesViewModel courseReq)
+        public ActionResult Index([Bind(Include = "name,course_code")] CoursesViewModel courseReq)
         {
             if (ModelState.IsValid)
             {
@@ -60,7 +62,6 @@ namespace SchoolManagement.Controllers
 
         public ActionResult Subject()
         {
-            ViewBag.Courses = new SelectList(db.courses.ToList(), "id", "course_code");
             ViewData["Course"] = db.courses.ToList();
             ViewData["Subject"] = db.subjects.ToList();
             return View();
@@ -136,7 +137,7 @@ namespace SchoolManagement.Controllers
                     {
                         System.IO.File.Delete(pathToExcelFile);
                     }
-                    return RedirectToAction("Subject", "Courses");
+                    return RedirectToAction("Index", "Courses");
                 }
             }
             return RedirectToAction("Subject", "Courses");

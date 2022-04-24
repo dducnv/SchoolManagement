@@ -1,8 +1,10 @@
 ﻿
 @{
+
     ViewBag.Title = "Teacher";
 }
-
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/fullcalendar")
 <div class="slim-mainpanel">
     <div class="container">
         <div class="slim-pageheader">
@@ -12,408 +14,107 @@
             </ol>
             <h6 class="slim-pagetitle">Teacher</h6>
         </div><!-- slim-pageheader -->
-
-
-        <div class="row row-xs mb-3">
-            <div class="col-sm-6 col-lg-3">
+        <!--<div class="row row-xs mb-3">
+            <div class="col-sm-6 col-lg-6">
                 <div class="card card-status">
                     <div class="media">
                         <i class="icon fas fa-user-graduate  tx-purple"></i>
                         <div class="media-body">
                             <h1>35000</h1>
                             <p>Students</p>
-                        </div><!-- media-body -->
-                    </div><!-- media -->
-                </div><!-- card -->
-            </div><!-- col-3 -->
-            <div class="col-sm-6 col-lg-3 mg-t-10 mg-sm-t-0">
-                <div class="card card-status">
-                    <div class="media">
-                        <i class="icon fas fa-clipboard-list tx-teal"></i>
-                        <div class="media-body">
-                            <h1>19050</h1>
-                            <p>Total Exams</p>
-                        </div><!-- media-body -->
-                    </div><!-- media -->
-                </div><!-- card -->
-            </div><!-- col-3 -->
-            <div class="col-sm-6 col-lg-3 mg-t-10 mg-lg-t-0">
-                <div class="card card-status">
-                    <div class="media">
-                        <i class="icon fas fa-graduation-cap tx-primary"></i>
-                        <div class="media-body">
-                            <h1>23890</h1>
-                            <p>Graduate Studes</p>
-                        </div><!-- media-body -->
-                    </div><!-- media -->
-                </div><!-- card -->
-            </div><!-- col-3 -->
-            <div class="col-sm-6 col-lg-3 mg-t-10 mg-lg-t-0">
-                <div class="card card-status">
-                    <div class="media">
-                        <i class="icon far fa-money-bill-alt tx-pink"></i>
-                        <div class="media-body">
-                            <h1>$21020</h1>
-                            <p>Total Income</p>
-                        </div><!-- media-body -->
-                    </div><!-- media -->
-                </div><!-- card -->
-            </div><!-- col-3 -->
+                        </div>-->
+        <!-- media-body -->
+        <!--</div>--><!-- media -->
+        <!--</div>--><!-- card -->
+        <!--</div>--><!-- col-3 -->
+        <!--<div class="col-sm-6 col-lg-6 mg-t-10 mg-sm-t-0">
+            <div class="card card-status">
+                <div class="media">
+                    <i class="icon fas fa-clipboard-list tx-teal"></i>
+                    <div class="media-body">
+                        <h1>19050</h1>
+                        <p>Total Exams</p>
+                    </div>-->
+        <!-- media-body -->
+        <!--</div>--><!-- media -->
+        <!--</div>--><!-- card -->
+        <!--</div>--><!-- col-3 -->
+    </div><!-- row -->
+    <div class="section-wrapper mb-3">
+        <label class="section-title">Attendance for day</label>
+
+        <div class="row row-xs">
+            @foreach (var attendance in ViewData["Attendance"] as IList<SchoolManagement.Models.Timetable>)
+            {
+                System.Globalization.CultureInfo cul = System.Globalization.CultureInfo.CurrentCulture;
+                if (cul.Calendar.GetWeekOfYear(new DateTime(int.Parse(Convert.ToDateTime(attendance.Date).ToString("yyyy")), int.Parse(Convert.ToDateTime(attendance.Date).ToString("MM")), int.Parse(Convert.ToDateTime(attendance.Date).ToString("dd"))), System.Globalization.CalendarWeekRule.FirstDay, DayOfWeek.Monday) == ViewBag.WeekNumber)
+                {
+                    var isCoplete = false;
+                    foreach (var complete in ViewData["Complete"] as IList<SchoolManagement.Models.Attendance>)
+                    {
+
+                        if (complete.TimetableId == attendance.Id)
+                        {
+                            isCoplete = true;
+                        }
+                        else
+                        {
+                            isCoplete = true;
+                        }
+                    }
+                    if (isCoplete == true)
+                    {
+                        <div class="col-sm-6 col-lg-6 mb-2">
+                            <a href="@Url.Action("Details","Attendance",new { id = attendance.Id})" class="card card-status">
+                                <div class="media">
+                                    <i class="icon ion-checkmark tx-purple text-success"></i>
+                                    <div class="media-body">
+                                        <h1 class="text-uppercase text-success">@attendance.StudentGroup.ClassName</h1>
+                                        <h2>@attendance.Subject.Name</h2>
+                                        <h3>@attendance.Duration</h3>
+                                    </div><!-- media-body -->
+                                </div><!-- media -->
+                            </a><!-- card -->
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-sm-6 col-lg-6 mb-2">
+                            <a href="@Url.Action("Index","Attendance",new { id = attendance.Id})" class="card card-status">
+                                <div class="media">
+                                    <i class="icon ion-android-add-circle tx-purple"></i>
+                                    <div class="media-body">
+                                        <h1 class="text-uppercase">@attendance.StudentGroup.ClassName</h1>
+                                        <h2>@attendance.Subject.Name</h2>
+                                        <h3>@attendance.Duration</h3>
+                                    </div><!-- media-body -->
+                                </div><!-- media -->
+                            </a><!-- card -->
+                        </div>
+                    }
+                }
+            }
         </div><!-- row -->
+    </div><!-- section-wrapper -->
+    <div class="card pd-25">
+        <label class="section-title mb-4">Timetable</label>
+        <div id="fullCalendar"></div>
+    </div><!-- card -->
+    <script>
+        $(function () {
+            'use strict';
 
+            $('#fullCalendar').fullCalendar({
+                header: {
+                    left: 'prev',
+                    center: 'title',
+                    right: 'today next'
+                },
+                events: "https://localhost:44319/Timetable/TimetableCalendar"
+            });
+        });
+    </script>
     <!-- Student Table Area Start Here -->
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card dashboard-card-eleven">
-                <div class="card-body">
-                    <div class="heading-layout1">
-                        <div class="item-title">
-                            <h3>My Students</h3>
-                        </div>
-                        <div class="dropdown">
-                            <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">...</a>
-
-                            <div class="dropdown-menu dropdown-menu-right">
-                                <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-box-wrap">
-                        <form class="search-form-box">
-                            <div class="row gutters-8">
-                                <div class="col-3-xxxl col-xl-3 col-lg-3 col-12 form-group">
-                                    <input type="text" placeholder="Search by Roll ..." class="form-control">
-                                </div>
-                                <div class="col-4-xxxl col-xl-4 col-lg-4 col-12 form-group">
-                                    <input type="text" placeholder="Search by Name ..." class="form-control">
-                                </div>
-                                <div class="col-4-xxxl col-xl-3 col-lg-3 col-12 form-group">
-                                    <input type="text" placeholder="Search by Class ..." class="form-control">
-                                </div>
-                                <div class="col-1-xxxl col-xl-2 col-lg-2 col-12 form-group">
-                                    <button type="button" class="btn btn-warning">Search</button>
-                                </div>
-                            </div>
-                        </form>
-                        <div class="table-responsive student-table-box">
-                            <div id="DataTables_Table_0_wrapper" class="dataTables_wrapper no-footer">
-                                <table class="table display data-table text-nowrap dataTable no-footer" id="DataTables_Table_0" role="grid">
-                                    <thead>
-                                        <tr role="row">
-                                            <th class="sorting_asc" rowspan="1" colspan="1" aria-label="
-
-
-                                                            Roll
-
-                                                    " style="width: 85.7969px;">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input checkAll">
-                                                    <label class="form-check-label">Roll</label>
-                                                </div>
-                                            </th>
-                                           
-                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending" style="width: 80.6875px;">Name</th>
-                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Gender: activate to sort column ascending" style="width: 51.625px;">Gender</th>
-                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Class: activate to sort column ascending" style="width: 39.7031px;">Class</th>
-                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Section: activate to sort column ascending" style="width: 54.0312px;">Section</th>
-                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending" style="width: 133.797px;">Address</th>
-                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Date Of Birth: activate to sort column ascending" style="width: 92.1094px;">Date Of Birth</th>
-                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending" style="width: 100.172px;">Phone</th>
-                                            <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1" aria-label="E-mail: activate to sort column ascending" style="width: 166.078px;">E-mail</th>
-                                            <th class="sorting_disabled" rowspan="1" colspan="1" aria-label="" style="width: 43.0938px;"></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
-                                                    <label class="form-check-label">#0021</label>
-                                                </div>
-                                            </td>
-                                            <td>Duong Quynh Anh</td>
-                                            <td>Female</td>
-                                            <td>T2009M1</td>
-                                            <td>A</td>
-                                            <td>Hung Yen</td>
-                                            <td>04/06/2002</td>
-                                            <td>+ 123 9988568</td>
-                                            <td>anh123@gmail.com</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                        <span class="flaticon-more-button-of-three-dots"></span>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr role="row" class="even">
-                                            <td class="sorting_1">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
-                                                    <label class="form-check-label">#0022</label>
-                                                </div>
-                                            </td>
-                                            <td>Jessia Rose</td>
-                                            <td>Female</td>
-                                            <td>1</td>
-                                            <td>A</td>
-                                            <td>59 Australia, Sydney</td>
-                                            <td>02/05/2001</td>
-                                            <td>+ 123 9988568</td>
-                                            <td>kazifahim93@gmail.com</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                        <span class="flaticon-more-button-of-three-dots"></span>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
-                                                    <label class="form-check-label">#0023</label>
-                                                </div>
-                                            </td>
-                                           
-                                            <td>Mark Willy</td>
-                                            <td>Male</td>
-                                            <td>2</td>
-                                            <td>A</td>
-                                            <td>TA-107 Newyork</td>
-                                            <td>02/05/2001</td>
-                                            <td>+ 123 9988568</td>
-                                            <td>kazifahim93@gmail.com</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                        <span class="flaticon-more-button-of-three-dots"></span>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr role="row" class="even">
-                                            <td class="sorting_1">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
-                                                    <label class="form-check-label">#0024</label>
-                                                </div>
-                                            </td>
-                                            <td>Jessia Rose</td>
-                                            <td>Female</td>
-                                            <td>1</td>
-                                            <td>A</td>
-                                            <td>59 Australia, Sydney</td>
-                                            <td>02/05/2001</td>
-                                            <td>+ 123 9988568</td>
-                                            <td>kazifahim93@gmail.com</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                        <span class="flaticon-more-button-of-three-dots"></span>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
-                                                    <label class="form-check-label">#0025</label>
-                                                </div>
-                                            </td>
-                                            <td>Mark Willy</td>
-                                            <td>Male</td>
-                                            <td>2</td>
-                                            <td>A</td>
-                                            <td>TA-107 Newyork</td>
-                                            <td>02/05/2001</td>
-                                            <td>+ 123 9988568</td>
-                                            <td>kazifahim93@gmail.com</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                        <span class="flaticon-more-button-of-three-dots"></span>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr role="row" class="even">
-                                            <td class="sorting_1">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
-                                                    <label class="form-check-label">#0026</label>
-                                                </div>
-                                            </td>
-                                            <td>Jessia Rose</td>
-                                            <td>Female</td>
-                                            <td>1</td>
-                                            <td>A</td>
-                                            <td>59 Australia, Sydney</td>
-                                            <td>02/05/2001</td>
-                                            <td>+ 123 9988568</td>
-                                            <td>kazifahim93@gmail.com</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                        <span class="flaticon-more-button-of-three-dots"></span>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
-                                                    <label class="form-check-label">#0027</label>
-                                                </div>
-                                            </td>
-                                            <td>Mark Willy</td>
-                                            <td>Male</td>
-                                            <td>2</td>
-                                            <td>A</td>
-                                            <td>TA-107 Newyork</td>
-                                            <td>02/05/2001</td>
-                                            <td>+ 123 9988568</td>
-                                            <td>kazifahim93@gmail.com</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                        <span class="flaticon-more-button-of-three-dots"></span>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr role="row" class="even">
-                                            <td class="sorting_1">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
-                                                    <label class="form-check-label">#0028</label>
-                                                </div>
-                                            </td>
-                                            <td>Jessia Rose</td>
-                                            <td>Female</td>
-                                            <td>1</td>
-                                            <td>A</td>
-                                            <td>59 Australia, Sydney</td>
-                                            <td>02/05/2001</td>
-                                            <td>+ 123 9988568</td>
-                                            <td>kazifahim93@gmail.com</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                        <span class="flaticon-more-button-of-three-dots"></span>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr role="row" class="odd">
-                                            <td class="sorting_1">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
-                                                    <label class="form-check-label">#0029</label>
-                                                </div>
-                                            </td>
-                                            <td>Mark Willy</td>
-                                            <td>Male</td>
-                                            <td>2</td>
-                                            <td>A</td>
-                                            <td>TA-107 Newyork</td>
-                                            <td>02/05/2001</td>
-                                            <td>+ 123 9988568</td>
-                                            <td>kazifahim93@gmail.com</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                        <span class="flaticon-more-button-of-three-dots"></span>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr role="row" class="even">
-                                            <td class="sorting_1">
-                                                <div class="form-check">
-                                                    <input type="checkbox" class="form-check-input">
-                                                    <label class="form-check-label">#0030</label>
-                                                </div>
-                                            </td>
-                                            <td>Jessia Rose</td>
-                                            <td>Female</td>
-                                            <td>1</td>
-                                            <td>A</td>
-                                            <td>59 Australia, Sydney</td>
-                                            <td>02/05/2001</td>
-                                            <td>+ 123 9988568</td>
-                                            <td>kazifahim93@gmail.com</td>
-                                            <td>
-                                                <div class="dropdown">
-                                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                                        <span class="flaticon-more-button-of-three-dots"></span>
-                                                    </a>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-times text-orange-red"></i>Close</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-cogs text-dark-pastel-green"></i>Edit</a>
-                                                        <a class="dropdown-item" href="#"><i class="fas fa-redo-alt text-orange-peel"></i>Refresh</a>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 </div>
 

@@ -26,11 +26,25 @@ namespace SchoolManagement
                   "~/Scripts/app.js",
                   "~/Scripts/dataTable.js"));
 
+            bundles.Add(new Bundle("~/bundles/datatable").Include(
+                 
+
+                "~/Scripts/jquery.dataTables.min.js"
+                ));
+            bundles.Add(new Bundle("~/bundles/fullcalendar").Include(
+                "~/Scripts/popper.min.js",
+                "~/Scripts/bootstrap.js",
+                "~/Scripts/moment/js/moment.js",
+                "~/Scripts/fullcalendar/js/fullcalendar.js"
+                ));
+
+
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/ionicons/css/ionicons.css",
                       "~/Content/all.min.css",
                        "~/Content/jquery.dataTables.css",
+                       "~/Content/fullcalendar/css/fullcalendar.css",
                       "~/Content/app.css"
                     ));
         }

@@ -58,17 +58,17 @@
                     {
                         foreach (var clr in ViewData["Classroom"] as IList<SchoolManagement.Models.Classroom>)
                         {
-                <tr>
-                    <td>@clr.Name</td>
-                    <td>@clr.Description</td>
-                    <td>@clr.Status</td>
-                    <td>
-                        <div class="btn-group" role="group" aria-label="Basic example">
-                            <button type="button" class="btn btn-secondary">Left</button>
-                            <button type="button" class="btn btn-secondary">Right</button>
-                        </div>
-                    </td>
-                </tr>
+                            <tr>
+                                <td>@clr.Name</td>
+                                <td>@clr.Description</td>
+                                <td>@clr.Status</td>
+                                <td>
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <button type="button" class="btn btn-secondary">Edit</button>
+                                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                                    </div>
+                                </td>
+                            </tr>
 
                         }
                     }

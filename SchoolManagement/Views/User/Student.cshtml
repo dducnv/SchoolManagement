@@ -1,0 +1,56 @@
+﻿
+@model IEnumerable<SchoolManagement.Models.Account>
+@{
+    ViewBag.Title = "Student";
+}
+<div class="slim-pageheader">
+    <ol class="breadcrumb slim-breadcrumb">
+        <li class="breadcrumb-item">
+           @Html.ActionLink("Add New Student","AddAccount","Account")
+        </li>
+    </ol>
+    <h6 class="slim-pagetitle">Students</h6>
+</div>
+<div class="section-wrapper">
+    <table id="datatable1" class="table display responsive nowrap">
+        <thead>
+            <tr>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.roll_number)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.Firstname)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.Lastname)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.Gender)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.Email)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.PhoneNumber)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.Birthday)</th>
+                <th class="wd-15p">@Html.DisplayNameFor(m => m.Address)</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>@item.roll_number</td>
+                <td>@item.Firstname</td>
+                <td>@item.Lastname</td>
+                <td>@item.Gender</td>
+                <td>@item.Email</td>
+                <td>@item.PhoneNumber</td>
+                <td>@item.Birthday</td>
+                <td>@item.Address</td>
+
+                <td>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <button type="button" class="btn btn-secondary">Edit</button>
+                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                    </div>
+                </td>
+            </tr>
+
+            }
+        </tbody>
+    </table>
+</div>
+

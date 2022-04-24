@@ -20,5 +20,6 @@ namespace SchoolManagement.Models
         public virtual Account Account { get; set; }
         public virtual Classroom Classroom { get; set; }
         public virtual StudentGroup StudentGroup { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; }
     }
 }

@@ -18,6 +18,5 @@ namespace SchoolManagement.Models
         public virtual ICollection<Students_StudentGroup> Students_StudentGroups { get; set; }
         public virtual ICollection<Timetable> Timetables { get; set; }
 
-
     }
 }

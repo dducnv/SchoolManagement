@@ -2,65 +2,366 @@
 @{
     ViewBag.Title = "Index";
 }
-
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/datatable")
 <div class="section-wrapper">
-    <div class="row">
-        <div class="col-md-4">
-            @using (Html.BeginForm("SaveCourse", "Courses"))
-            {
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.AntiForgeryToken()
+
+    @using (Html.BeginForm("Index", "Courses"))
+    {
+        <div class="row">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.AntiForgeryToken()
+            <div class="col-md-6">
                 <div class="form-group">
                     @Html.LabelFor(m => m.name, new { @class = "form-label" })
                     @Html.TextBoxFor(m => m.name, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.name, "", new { @class = "text-danger" })
                 </div>
+            </div>
+            <div class="col-md-6">
+
                 <div class="form-group">
                     @Html.LabelFor(m => m.course_code, new { @class = "form-label" })
                     @Html.TextBoxFor(m => m.course_code, new { @class = "form-control" })
                     @Html.ValidationMessageFor(m => m.course_code, "", new { @class = "text-danger" })
                 </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary pd-x-20">Button</button>
-                </div>
-            }
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary pd-x-20">Submit</button>
+
+            </div>
         </div>
-        <div class="col-md-8">
-            <table id="datatable1" class="table display responsive nowrap">
-                <thead>
-                    <tr>
-                        <th class="wd-15p">@Html.DisplayNameFor(m => m.course_code)</th>
-                        <th class="wd-15p">@Html.DisplayNameFor(m => m.name)</th>
-                        <th class="wd-15p">Acction</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (ViewData["Courses"] == null)
-                    {
-                        <tr>
-                            <td colspan="3">Course Empty!</td>
-                        </tr>
-                    }
-                    else
-                    {
-                        foreach (var course in ViewData["Courses"] as IList<SchoolManagement.Models.Courses>)
-                        {
-                            <tr>
-                                <td>@course.Name</td>
-                                <td>@course.Course_code</td>
-                                <td>
-                                    <div class="btn-group" role="group" aria-label="Basic example">
-                                        <button type="button" class="btn btn-secondary">Left</button>
-                                        <button type="button" class="btn btn-secondary">Right</button>
+    }
+
+</div>
+
+<div class="section-wrapper mt-3">
+    @Html.Partial("Components/AddSubject")
+    <div class="row">
+        <div class="col-md-12">
+            <div class="accordion" id="Courses">
+                @foreach (var course in ViewData["Courses"] as IList<SchoolManagement.Models.Courses>)
+                {
+                    <div class="card">
+                        <div class="card-header" id="@course.Course_code">
+                            <h2 class="mb-0">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#@course.Id">
+                                            <div class="col-md-6 text-left">
+                                                @course.Name - @course.Course_code <i class="icon mg-l-5 ion-ios-arrow-down"></i>
+                                            </div>
+                                        </button>
                                     </div>
-                                </td>
-                            </tr>
+                                    <div class="col-md-6 text-right">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-secondary">Edit</button>
+                                            <button type="button" class="btn btn-outline-danger">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
 
-                        }
-                    }
+                            </h2>
+                        </div>
 
-                </tbody>
-            </table>
+                        <div id="@course.Id" class="collapse" aria-labelledby="@course.Course_code" data-parent="#Courses">
+                            <div class="card-body">
+                                <div class="accordion" id="semester-@course.Course_code">
+                                    <div class="card">
+                                        <div class="card-header" id="semester-1">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#semester-one-@course.Course_code" aria-expanded="true" aria-controls="semester-one-@course.Course_code">
+                                                    Semester 1 <i class="icon mg-l-5 ion-ios-arrow-down"></i>
+                                                </button>
+                                            </h2>
+                                        </div>
+
+                                        <div id="semester-one-@course.Course_code" class="collapse" aria-labelledby="semester-one-@course.Course_code" data-parent="#semester-@course.Course_code">
+                                            <div class="card-body">
+                                                <table id="datatable-semester-one-@course.Course_code" class="table display responsive nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="wd-15p">Subject Name</th>
+                                                            <th class="wd-15p">Subject Code</th>
+                                                            <th class="wd-15p">Slot</th>
+                                                            <th class="wd-15p">Status</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (ViewData["Subject"] == null)
+                                                        {
+                                                            <tr>
+                                                                <td colspan="6">Subject Empty!</td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+
+                                                            foreach (var subject in ViewData["Subject"] as IList<SchoolManagement.Models.Subject>)
+                                                            {
+                                                                if (subject.Semester == 1 && subject.CoursesId == course.Id)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@subject.Name</td>
+                                                                        <td>@subject.Sub_code</td>
+                                                                        <td>@subject.Slot</td>
+                                                                        <td>@subject.Status</td>
+                                                                        <td>
+                                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                                <button type="button" class="btn btn-secondary">Edit</button>
+                                                                                <button type="button" class="btn btn-outline-danger">Delete</button>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                                <script>
+                                                    $(function () {
+                                                        'use strict';
+
+                                                        $('#datatable-semester-one-@course.Course_code').DataTable({
+                                                            responsive: true,
+                                                            language: {
+                                                                searchPlaceholder: 'Search...',
+                                                                sSearch: '',
+                                                                lengthMenu: '_MENU_ items/page',
+                                                            }
+                                                        });
+
+
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="semester-1">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#semester-two-@course.Course_code" aria-expanded="true" aria-controls="semester-two-@course.Course_code">
+                                                    Semester 2  <i class="icon mg-l-5 ion-ios-arrow-down"></i>
+                                                </button>
+                                            </h2>
+                                        </div>
+
+                                        <div id="semester-two-@course.Course_code" class="collapse" aria-labelledby="semester-two-@course.Course_code" data-parent="#semester-@course.Course_code">
+                                            <div class="card-body">
+                                                <table id="datatable-semester-two-@course.Course_code" class="table display responsive nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="wd-15p">Subject Name</th>
+                                                            <th class="wd-15p">Subject Code</th>
+                                                            <th class="wd-15p">Slot</th>
+                                                            <th class="wd-15p">Status</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (ViewData["Subject"] == null)
+                                                        {
+                                                            <tr>
+                                                                <td colspan="6">Subject Empty!</td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+
+                                                            foreach (var subject in ViewData["Subject"] as IList<SchoolManagement.Models.Subject>)
+                                                            {
+                                                                if (subject.Semester == 2 && subject.CoursesId == course.Id)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@subject.Name</td>
+                                                                        <td>@subject.Sub_code</td>
+                                                                        <td>@subject.Slot</td>
+                                                                        <td>@subject.Status</td>
+                                                                        <td>
+                                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                                <button type="button" class="btn btn-secondary">Edit</button>
+                                                                                <button type="button" class="btn btn-outline-danger">Delete</button>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                                <script>
+                                                    $(function () {
+                                                        'use strict';
+
+                                                        $('#datatable-semester-two-@course.Course_code').DataTable({
+                                                            responsive: true,
+                                                            language: {
+                                                                searchPlaceholder: 'Search...',
+                                                                sSearch: '',
+                                                                lengthMenu: '_MENU_ items/page',
+                                                            }
+                                                        });
+
+
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="semester-1">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#semester-three-@course.Course_code" aria-expanded="true" aria-controls="semester-three-@course.Course_code">
+                                                    Semester 3 <i class="icon mg-l-5 ion-ios-arrow-down"></i>
+                                                </button>
+                                            </h2>
+                                        </div>
+
+                                        <div id="semester-three-@course.Course_code" class="collapse" aria-labelledby="semester-three-@course.Course_code" data-parent="#semester-@course.Course_code">
+                                            <div class="card-body">
+                                                <table id="datatable-semester-three-@course.Course_code" class="table display responsive nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="wd-15p">Subject Name</th>
+                                                            <th class="wd-15p">Subject Code</th>
+                                                            <th class="wd-15p">Slot</th>
+                                                            <th class="wd-15p">Status</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (ViewData["Subject"] == null)
+                                                        {
+                                                            <tr>
+                                                                <td colspan="6">Subject Empty!</td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+
+                                                            foreach (var subject in ViewData["Subject"] as IList<SchoolManagement.Models.Subject>)
+                                                            {
+                                                                if (subject.Semester == 3 && subject.CoursesId == course.Id)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@subject.Name</td>
+                                                                        <td>@subject.Sub_code</td>
+                                                                        <td>@subject.Slot</td>
+                                                                        <td>@subject.Status</td>
+                                                                        <td>
+                                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                                <button type="button" class="btn btn-secondary">Edit</button>
+                                                                                <button type="button" class="btn btn-outline-danger">Delete</button>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                                <script>
+                                                    $(function () {
+                                                        'use strict';
+
+                                                        $('#datatable-semester-three-@course.Course_code').DataTable({
+                                                            responsive: true,
+                                                            language: {
+                                                                searchPlaceholder: 'Search...',
+                                                                sSearch: '',
+                                                                lengthMenu: '_MENU_ items/page',
+                                                            }
+                                                        });
+
+
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="semester-1">
+                                            <h2 class="mb-0">
+                                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#semester-four-@course.Course_code" aria-expanded="true" aria-controls="semester-four-@course.Course_code">
+                                                    Semester 4 <i class="icon mg-l-5 ion-ios-arrow-down"></i>
+                                                </button>
+                                            </h2>
+                                        </div>
+
+                                        <div id="semester-four-@course.Course_code" class="collapse" aria-labelledby="semester-four-@course.Course_code" data-parent="#semester-@course.Course_code">
+                                            <div class="card-body">
+                                                <table id="datatable-semester-four-@course.Course_code" class="table display responsive nowrap">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="wd-15p">Subject Name</th>
+                                                            <th class="wd-15p">Subject Code</th>
+                                                            <th class="wd-15p">Slot</th>
+                                                            <th class="wd-15p">Status</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @if (ViewData["Subject"] == null)
+                                                        {
+                                                            <tr>
+                                                                <td colspan="6">Subject Empty!</td>
+                                                            </tr>
+                                                        }
+                                                        else
+                                                        {
+
+                                                            foreach (var subject in ViewData["Subject"] as IList<SchoolManagement.Models.Subject>)
+                                                            {
+                                                                if (subject.Semester == 4 && subject.CoursesId == course.Id)
+                                                                {
+                                                                    <tr>
+                                                                        <td>@subject.Name</td>
+                                                                        <td>@subject.Sub_code</td>
+                                                                        <td>@subject.Slot</td>
+                                                                        <td>@subject.Status</td>
+                                                                        <td>
+                                                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                                                <button type="button" class="btn btn-secondary">Edit</button>
+                                                                                <button type="button" class="btn btn-outline-danger">Delete</button>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                }
+
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                                <script>
+                                                    $(function () {
+                                                        'use strict';
+
+                                                        $('#datatable-semester-four-@course.Course_code').DataTable({
+                                                            responsive: true,
+                                                            language: {
+                                                                searchPlaceholder: 'Search...',
+                                                                sSearch: '',
+                                                                lengthMenu: '_MENU_ items/page',
+                                                            }
+                                                        });
+
+
+                                                    });
+                                                </script>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
         </div>
     </div>
 </div><!-- section-wrapper -->

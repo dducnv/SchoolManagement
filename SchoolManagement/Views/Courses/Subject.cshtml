@@ -11,83 +11,7 @@
     <h6 class="slim-pagetitle">Subject</h6>
 </div>
 <!-- MODAL GRID -->
-<div id="addsubject" class="modal fade">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content ">
-            <div class="modal-header">
-                <h6 class="tx-14 mg-b-0 tx-uppercase tx-inverse tx-bold">Add Subject</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body pd-20">
-                <div class="pd-10 bd">
-                    <ul class="nav nav-gray-600 flex-column nav-pills flex-md-row justify-content-center" role="tablist">
-                        <li class="nav-item mg-r-10"><a class="nav-link active" data-toggle="tab" href="#form" role="tab" aria-controls="form">Form Add</a></li>
-                        <li class="nav-item mg-l-10"><a class="nav-link" data-toggle="tab" href="#import" role="tab" aria-controls="import">Import</a></li>
-                    </ul>
-                </div>
-                <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active mg-t-20" id="form" role="tabpanel" aria-labelledby=form-tab">
-                        @using (Html.BeginForm("SaveSubject", "Courses"))
-                        {
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                            @Html.AntiForgeryToken()
-                            <div class="form-group bd-t-0-force mg-b-10">
-                                @Html.LabelFor(m => m.name, new { @class = "form-label" })
-                                @Html.TextBoxFor(m => m.name, new { @class = "form-control wd-700" })
-                                @Html.ValidationMessageFor(m => m.name, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group bd-t-0-force mg-b-10">
-                                @Html.LabelFor(m => m.sub_code, new { @class = "form-label" })
-                                @Html.TextBoxFor(m => m.sub_code, new { @class = "form-control wd-700" })
-                                @Html.ValidationMessageFor(m => m.sub_code, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group bd-t-0-force mg-b-10">
-                                @Html.LabelFor(m => m.Courses_id, new { @class = "form-label" })
-                                @Html.DropDownListFor(model => model.Courses_id, (SelectList)ViewBag.Courses, "choose", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.Courses_id, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group bd-t-0-force mg-b-10">
-                                @Html.LabelFor(m => m.semester, new { @class = "form-label" })
-                                @Html.DropDownListFor(m => m.semester, new List<SelectListItem>
-                                   {
-                                      new SelectListItem{ Text="Semester 1", Value = "1" },
-                                      new SelectListItem{ Text="Semester 2", Value = "2" },
-                                      new SelectListItem{ Text="Semester 3", Value = "3" },
-                                      new SelectListItem{ Text="Semester 4", Value = "4" },
-                                   }, "Choose Semester", new { @class = "form-control" })
-                                @Html.ValidationMessageFor(m => m.semester, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group bd-t-0-force mg-b-10">
-                                @Html.LabelFor(m => m.slot, new { @class = "form-label" })
-                                @Html.TextBoxFor(m => m.slot, new { @class = "form-control wd-700",type="number" })
-                                @Html.ValidationMessageFor(m => m.slot, "", new { @class = "text-danger" })
-                            </div>
-                            <div class="form-group bd-t-0-force mg-b-10">
-                                @Html.LabelFor(m => m.status, new { @class = "form-label" })
-                                @Html.TextBoxFor(m => m.status, new { @class = "form-control wd-700" })
-                                @Html.ValidationMessageFor(m => m.status, "", new { @class = "text-danger" })
-                            </div>
-                            <button type="submit" class="btn btn-primary mg-t-10">Submit</button>
 
-                        }
-                    </div>
-                    <div class="tab-pane fade mg-t-20" id="import" role="tabpanel" aria-labelledby="import-tab">
-                        @using (Html.BeginForm("SubjectImport", "Courses", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                        {
-                            <div class="custom-file w-700">
-                                <input type="file" name="subjectfile" class="form-control w-700" id="customFile">
-                            </div><!-- custom-file -->
-                            <button type="submit" class="btn btn-primary mg-t-10">Submit</button>
-                        }
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div><!-- modal-dialog -->
-</div><!-- modal -->
 
 <div class="section-wrapper">
     <table id="datatable1" class="table display responsive nowrap">
@@ -132,4 +56,5 @@
             }
         </tbody>
     </table>
+  
 </div>

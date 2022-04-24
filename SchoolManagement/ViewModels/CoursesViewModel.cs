@@ -12,7 +12,7 @@ namespace SchoolManagement.ViewModels
         [DisplayName("Course Name")]
         [Required(ErrorMessage = "Please enter Course Name")]
         public string name { get; set; }
-        [DisplayName("Course Name")]
+        [DisplayName("Course Code")]
         [Required(ErrorMessage = "Please enter Course Name")]
         public string course_code { get; set; }
     }

@@ -21,5 +21,6 @@ namespace StudentManage.Data
         public DbSet<StudentGroup> studentGroups { get; set; }
         public DbSet<Students_StudentGroup> Students_StudentGroups { get; set; }
         public DbSet<Timetable> Timetables { get; set; }
+        public DbSet<Attendance> Attendances { get; set; }
     }
 }

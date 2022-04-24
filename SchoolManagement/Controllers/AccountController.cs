@@ -123,6 +123,7 @@ namespace SchoolManagement.Controllers
 
 
         }
+        [HttpPost]
         public async Task<ActionResult> ImportAccountExcel(HttpPostedFileBase accountFile)
         {
             if (accountFile != null)

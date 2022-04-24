@@ -2,13 +2,15 @@
 @{
     ViewBag.Title = "Student Group";
 }
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/datatable")
 <div class="slim-pageheader">
     <ol class="breadcrumb slim-breadcrumb">
         <li class="breadcrumb-item">
-            <button class="btn btn-outline-primary btn-block mg-b-10" data-toggle="modal" data-target="#addsubject">Add Subject</button>
+            <button class="btn btn-outline-primary btn-block mg-b-10" data-toggle="modal" data-target="#addsubject">Add Timetable</button>
         </li>
     </ol>
-    <h6 class="slim-pagetitle">Subject</h6>
+    <h6 class="slim-pagetitle">Timetable</h6>
 </div>
 <!-- MODAL GRID -->
 <div id="addsubject" class="modal fade">
@@ -27,7 +29,7 @@
                     @Html.AntiForgeryToken()
                     <div class="form-group bd-t-0-force mg-b-10">
                         @Html.LabelFor(m => m.StudentGroupId, new { @class = "form-label" })
-                        @Html.DropDownListFor(model => model.StudentGroupId, (SelectList)ViewBag.StudentGroup, "choose", new { @class = "form-control wd-700" })
+                        @Html.DropDownListFor(model => model.StudentGroupId, (SelectList)ViewBag.StudentGroupSelect, "choose", new { @class = "form-control wd-700" })
                         @Html.ValidationMessageFor(m => m.StudentGroupId, "", new { @class = "text-danger" })
                     </div>
                     <div class="form-group bd-t-0-force mg-b-10">
@@ -50,71 +52,342 @@
                               new SelectListItem{ Text="Semester 4", Value = "4" },
                            }, "Choose Semester", new { @class = "form-control" })
                         @Html.ValidationMessageFor(m => m.Semester, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group bd-t-0-force mg-b-10">
-                            @Html.LabelFor(m => m.Date, new { @class = "form-label" })
-                            @Html.TextBoxFor(m => m.Date, new { @class = "form-control wd-700", type = "Date", min = DateTime.Now.Date.ToString("yyyy-MM-dd") })
-                            @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
-                        </div>
-                        <div class="form-group bd-t-0-force mg-b-10">
-                            @Html.LabelFor(m => m.AccountId, new { @class = "form-label" })
-                            @Html.DropDownListFor(model => model.AccountId, (SelectList)ViewBag.Lecturer, "choose", new { @class = "form-control" })
-                            @Html.ValidationMessageFor(m => m.AccountId, "", new { @class = "text-danger" })
-                        </div>
-
-                        <button type="submit" class="btn btn-primary mg-t-10">Submit</button>
-
-                        }
                     </div>
-                </div>
+                    <div class="form-group bd-t-0-force mg-b-10">
+                        @Html.LabelFor(m => m.Date, new { @class = "form-label" })
+                        @Html.TextBoxFor(m => m.Date, new { @class = "form-control wd-700", type = "Date", min = DateTime.Now.Date.ToString("yyyy-MM-dd") })
+                        @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group bd-t-0-force mg-b-10">
+                        @Html.LabelFor(m => m.AccountId, new { @class = "form-label" })
+                        @Html.DropDownListFor(model => model.AccountId, (SelectList)ViewBag.Lecturer, "choose", new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.AccountId, "", new { @class = "text-danger" })
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mg-t-10">Submit</button>
+
+                }
+            </div>
+        </div>
     </div><!-- modal-dialog -->
 </div><!-- modal -->
 
-@*<div class="section-wrapper">
-    <table id="datatable1" class="table display responsive nowrap">
-        <thead>
-            <tr>
-                <th class="wd-15p">@Html.DisplayNameFor(m => m.StudentGroupId)</th>
-                <th class="wd-15p">@Html.DisplayNameFor(m => m.ClassroomId)</th>
-                <th class="wd-15p">@Html.DisplayNameFor(m => m.CoursesId)</th>
-                <th class="wd-15p">@Html.DisplayNameFor(m => m.AccountId)</th>
-                <th>Add Student</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (ViewData["StudentGroup"] == null)
-            {
-                <tr>
-                    <td colspan="6">Course Empty!</td>
-                </tr>
-            }
-            else
-            {
+<div class="section-wrapper">
+    <div class="accordion" id="accordionExample">
+        @foreach (var studentGroup in ViewData["StudentGroup"] as IList<SchoolManagement.Models.StudentGroup>
+            )
+        {
+            <div class="card">
+                <div class="card-header" id="@studentGroup.ClassName-@studentGroup.Id">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#studentgr-@studentGroup.Id" aria-expanded="true" aria-controls="studentgr-@studentGroup.Id">
+                            @studentGroup.ClassName <i class="icon mg-l-5 ion-ios-arrow-down"></i>
+                        </button>
+                    </h2>
+                </div>
 
-                foreach (var studentGroup in ViewData["StudentGroup"] as IList<SchoolManagement.Models.StudentGroup>)
-                {
-                    <tr>
-                        <td>@studentGroup.ClassName</td>
-                        <td>@studentGroup.CoursesId</td>
-                        <td>@studentGroup.Session</td>
-                        <td>@studentGroup.Shift</td>
-                        <td>@studentGroup.OpeningDate</td>
-                        <td>
-                           
-                        </td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-secondary">Left</button>
-                                <button type="button" class="btn btn-secondary">Right</button>
+                <div id="studentgr-@studentGroup.Id" class="collapse" aria-labelledby="studentgr-@studentGroup.Id" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <div class="accordion" id="semester-@studentGroup.Id">
+                            <div class="card">
+                                <div class="card-header" id="semester-1">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#semester-one-@studentGroup.Id" aria-expanded="true" aria-controls="semester-one-@studentGroup.Id">
+                                            Semester 1 <i class="icon mg-l-5 ion-ios-arrow-down"></i>
+                                        </button>
+                                    </h2>
+                                </div>
+
+                                <div id="semester-one-@studentGroup.Id" class="collapse" aria-labelledby="semester-one-@studentGroup.Id" data-parent="#semester-@studentGroup.Id">
+                                    <div class="card-body">
+                                        <table id="datatable-semester-one-@studentGroup.Id" class="table display responsive nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th class="wd-15p">Timetable Name</th>
+                                                    <th class="wd-15p">Duration</th>
+                                                    <th class="wd-15p">Date</th>
+                                                    <th class="wd-15p">Room</th>
+                                                    <th class="wd-15p">Teacher</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (ViewData["Timetable"] == null)
+                                                {
+                                                    <tr>
+                                                        <td colspan="6">Subject Empty!</td>
+                                                    </tr>
+                                                }
+                                                else
+                                                {
+
+                                                    foreach (var timetable in ViewData["Timetable"] as IList<SchoolManagement.Models.Timetable>)
+                                                    {
+                                                        if (timetable.Semester == 1 && timetable.StudentGroupId == studentGroup.Id)
+                                                        {
+                                                            <tr>
+                                                                <td>@timetable.Name</td>
+                                                                <td>@timetable.Duration</td>
+                                                                <td>@timetable.Date</td>
+                                                                <td>@timetable.Classroom.Name</td>
+                                                                <td>@timetable.Account.Lastname @timetable.Account.Firstname</td>
+                                                                <td>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn btn-secondary">Edit</button>
+                                                                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        }
+
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <script>
+                                                    $(function () {
+                                                        'use strict';
+
+                                                        $('#datatable-semester-one-@studentGroup.Id').DataTable({
+                                                            responsive: true,
+                                                            language: {
+                                                                searchPlaceholder: 'Search...',
+                                                                sSearch: '',
+                                                                lengthMenu: '_MENU_ items/page',
+                                                            }
+                                                        });
+
+
+                                                    });
+                                        </script>
+                                    </div>
+                                </div>
                             </div>
-                        </td>
-                    </tr>
-                }
-            }
-        </tbody>
-    </table>
-</div>*@
+                            <div class="card">
+                                <div class="card-header" id="semester-1">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#semester-two-@studentGroup.Id" aria-expanded="true" aria-controls="semester-two-@studentGroup.Id">
+                                            Semester 2  <i class="icon mg-l-5 ion-ios-arrow-down"></i>
+                                        </button>
+                                    </h2>
+                                </div>
+
+                                <div id="semester-two-@studentGroup.Id" class="collapse" aria-labelledby="semester-two-@studentGroup.Id" data-parent="#semester-@studentGroup.Id">
+                                    <div class="card-body">
+                                        <table id="datatable-semester-two-@studentGroup.Id" class="table display responsive nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th class="wd-15p">Timetable Name</th>
+                                                    <th class="wd-15p">Duration</th>
+                                                    <th class="wd-15p">Date</th>
+                                                    <th class="wd-15p">Teacher</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (ViewData["Timetable"] == null)
+                                                {
+                                                    <tr>
+                                                        <td colspan="6">Subject Empty!</td>
+                                                    </tr>
+                                                }
+                                                else
+                                                {
+
+                                                    foreach (var timetable in ViewData["Timetable"] as IList<SchoolManagement.Models.Timetable>)
+                                                    {
+                                                        if (timetable.Semester == 2 && timetable.StudentGroupId == studentGroup.Id)
+                                                        {
+                                                            <tr>
+                                                                <td>@timetable.Name</td>
+                                                                <td>@timetable.Duration</td>
+                                                                <td>@timetable.Date</td>
+                                                                <td>@timetable.Account.Lastname @timetable.Account.Firstname</td>
+                                                                <td>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn btn-secondary">Edit</button>
+                                                                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        }
+
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <script>
+                                                    $(function () {
+                                                        'use strict';
+
+                                                        $('#datatable-semester-two-@studentGroup.Id').DataTable({
+                                                            responsive: true,
+                                                            language: {
+                                                                searchPlaceholder: 'Search...',
+                                                                sSearch: '',
+                                                                lengthMenu: '_MENU_ items/page',
+                                                            }
+                                                        });
+
+
+                                                    });
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="semester-1">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#semester-three-@studentGroup.Id" aria-expanded="true" aria-controls="semester-three-@studentGroup.Id">
+                                            Semester 3 <i class="icon mg-l-5 ion-ios-arrow-down"></i>
+                                        </button>
+                                    </h2>
+                                </div>
+
+                                <div id="semester-three-@studentGroup.Id" class="collapse" aria-labelledby="semester-three-@studentGroup.Id" data-parent="#semester-@studentGroup.Id">
+                                    <div class="card-body">
+                                        <table id="datatable-semester-three-@studentGroup.Id" class="table display responsive nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th class="wd-15p">Timetable Name</th>
+                                                    <th class="wd-15p">Duration</th>
+                                                    <th class="wd-15p">Date</th>
+                                                    <th class="wd-15p">Teacher</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (ViewData["Timetable"] == null)
+                                                {
+                                                    <tr>
+                                                        <td colspan="6">Subject Empty!</td>
+                                                    </tr>
+                                                }
+                                                else
+                                                {
+
+                                                    foreach (var timetable in ViewData["Timetable"] as IList<SchoolManagement.Models.Timetable>)
+                                                    {
+                                                        if (timetable.Semester == 3 && timetable.StudentGroupId == studentGroup.Id)
+                                                        {
+                                                            <tr>
+                                                                <td>@timetable.Name</td>
+                                                                <td>@timetable.Duration</td>
+                                                                <td>@timetable.Date</td>
+                                                                <td>@timetable.Account.Lastname @timetable.Account.Firstname</td>
+                                                                <td>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn btn-secondary">Edit</button>
+                                                                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        }
+
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <script>
+                                                    $(function () {
+                                                        'use strict';
+
+                                                        $('#datatable-semester-three-@studentGroup.Id').DataTable({
+                                                            responsive: true,
+                                                            language: {
+                                                                searchPlaceholder: 'Search...',
+                                                                sSearch: '',
+                                                                lengthMenu: '_MENU_ items/page',
+                                                            }
+                                                        });
+
+
+                                                    });
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="semester-1">
+                                    <h2 class="mb-0">
+                                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#semester-four-@studentGroup.Id" aria-expanded="true" aria-controls="semester-four-@studentGroup.Id">
+                                            Semester 4 <i class="icon mg-l-5 ion-ios-arrow-down"></i>
+                                        </button>
+                                    </h2>
+                                </div>
+
+                                <div id="semester-four-@studentGroup.Id" class="collapse" aria-labelledby="semester-four-@studentGroup.Id" data-parent="#semester-@studentGroup.Id">
+                                    <div class="card-body">
+                                        <table id="datatable-semester-four-@studentGroup.Id" class="table display responsive nowrap">
+                                            <thead>
+                                                <tr>
+                                                    <th class="wd-15p">Timetable Name</th>
+                                                    <th class="wd-15p">Duration</th>
+                                                    <th class="wd-15p">Date</th>
+                                                    <th class="wd-15p">Teacher</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @if (ViewData["Timetable"] == null)
+                                                {
+                                                    <tr>
+                                                        <td colspan="6">Subject Empty!</td>
+                                                    </tr>
+                                                }
+                                                else
+                                                {
+
+                                                    foreach (var timetable in ViewData["Timetable"] as IList<SchoolManagement.Models.Timetable>)
+                                                    {
+                                                        if (timetable.Semester == 4 && timetable.StudentGroupId == studentGroup.Id)
+                                                        {
+                                                            <tr>
+                                                                <td>@timetable.Name</td>
+                                                                <td>@timetable.Duration</td>
+                                                                <td>@timetable.Date</td>
+                                                                <td>@timetable.Account.Lastname @timetable.Account.Firstname</td>
+                                                                <td>
+                                                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                                                        <button type="button" class="btn btn-secondary">Edit</button>
+                                                                        <button type="button" class="btn btn-outline-danger">Delete</button>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        }
+
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                        <script>
+                                                    $(function () {
+                                                        'use strict';
+
+                                                        $('#datatable-semester-four-@studentGroup.Id').DataTable({
+                                                            responsive: true,
+                                                            language: {
+                                                                searchPlaceholder: 'Search...',
+                                                                sSearch: '',
+                                                                lengthMenu: '_MENU_ items/page',
+                                                            }
+                                                        });
+
+
+                                                    });
+                                        </script>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>
 
 
 

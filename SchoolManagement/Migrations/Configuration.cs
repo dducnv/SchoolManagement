@@ -42,15 +42,15 @@
             // Add course.
             AddCourse(context);
             // Add subject.
-            AddSubject(context);
-            // Save changes database.
+/*            AddSubject(context);
+*/            // Save changes database.
             context.SaveChanges();
         }
 
         private async Task AddUsersAsync(MyDBContext context)
         {
             var userStore = new UserStore<Account>(context);
-            var userManager = new UserManager<Account>(userStore);            
+            var userManager = new UserManager<Account>(userStore);
             context.Users.AddOrUpdate(new Models.Account()
             {
                 Id = "U0001",
@@ -182,7 +182,7 @@
             context.Roles.AddOrUpdate(new Models.Role()
             {
                 Id = "R00004",
-                Name = "STAFF"
+                Name = "EMPLOYEE"
             });
         }
 
@@ -256,6 +256,7 @@
 
         private void ClearData(MyDBContext context)
         {
+            context.Attendances.Clear();
             context.courses.Clear();
             context.subjects.Clear();
             context.Timetables.Clear();
@@ -286,6 +287,7 @@
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('dbo.Students_StudentGroup', RESEED, 0);");
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('dbo.StudentGroups', RESEED, 0);");
             context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('dbo.Courses', RESEED, 0);");
+            context.Database.ExecuteSqlCommand("DBCC CHECKIDENT('dbo.Attendances', RESEED, 0);");
         }
 
         private void AddClassRoom(MyDBContext context)

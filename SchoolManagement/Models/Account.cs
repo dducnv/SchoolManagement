@@ -16,5 +16,6 @@ namespace SchoolManagement.Models
         public string Birthday { get; set; }
         public virtual ICollection<Students_StudentGroup> Students_StudentGroups { get; set; }
         public virtual ICollection<Timetable> Timetables { get; set; }
+        public virtual ICollection<Attendance> Attendances { get; set; }
     }
 }
